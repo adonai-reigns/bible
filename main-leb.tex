@@ -1,0 +1,288 @@
+\documentclass[twopage,twocolumn,showtrims]{memoir}
+
+
+\setstocksize{228.6mm}{152.4mm}% 6in x 9in
+\settrimmedsize{8.5in}{5.5in}{*}
+\settrims{.25in}{.25in}
+
+\setcolsepandrule{4.5mm}{0pt}
+
+\setulmarginsandblock{14mm}{9mm}{1}
+
+%\setlrmargins{16mm}{12mm}{*}
+\setlrmarginsandblock{14.5mm}{7.5mm}{*}
+
+%\setheadfoot{26mm}{12mm}
+%\setheaderspaces{*}{24mm}{*}
+
+\checkandfixthelayout 
+
+%\setmarginnotes{1bp}{1bp}{1bp}
+
+\quarkmarks
+
+%\usepackage{atbegshi}
+%\AtBeginShipout{\special{pdf: put @thispage <</TrimBox [36.0 36.0 612 810]>>}}
+%\special{pdf: put @thispage <</TrimBox [36.0 36.0 612 810]>>}
+
+
+%\usepackage[pass,b5paper,inner=16mm,outer=12mm,top=24mm,bottom=8mm]{geometry}
+\usepackage{lipsum}
+\usepackage{fixltx2e}
+\usepackage{xspace}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{lettrine}
+\usepackage{flushend}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{fontspec}
+\usepackage{ifpdf}
+\usepackage{eso-pic}
+\usepackage[british]{babel}
+\usepackage{titlesec}
+\usepackage{blindtext}
+\usepackage{hyperref}
+
+
+
+\setmainfont{notoserif}[
+  % Files
+  Path      = fonts/noto-serif/ ,
+  % Fonts
+  UprightFont     = NotoSerif-Regular.ttf ,
+  UprightFeatures = { SmallCapsFont = NotoSerif-Regular.ttf, } ,
+  BoldFont        = NotoSerif-Bold.ttf,
+  BoldFeatures    = { SmallCapsFont = NotoSerif-Bold.ttf } ,
+  ItalicFont      = NotoSerif-Italic.ttf ,
+  BoldItalicFont  = NotoSerif-BoldItalic.ttf ,
+  % Features
+  Numbers = OldStyle ]
+
+
+% old-style numbers don't look great as drop-caps
+\newfontfamily{\lettrinefont}{AlegreyaSC}[
+  % Files
+  Path      = fonts/alegreya-sc/ ,
+  % Fonts
+  UprightFont     = *-Regular.ttf ,
+  UprightFeatures = { SmallCapsFont = *-Regular.ttf } ,
+  BoldFont        = *-Bold.ttf ,
+  BoldFeatures    = { SmallCapsFont = *-Bold.ttf } ,
+  ItalicFont      = *-Italic.ttf ,
+  BoldItalicFont  = *-BoldItalic.ttf]
+
+
+
+% old-style numbers don't look great as drop-caps
+\newfontfamily{\headings}{AlegreyaSC}[
+  % Files
+  Path      = fonts/alegreya-sc/ ,
+  % Fonts
+  UprightFont     = *-Regular.ttf ,
+  UprightFeatures = { SmallCapsFont = *-Regular.ttf } ,
+  BoldFont        = *-Bold.ttf ,
+  BoldFeatures    = { SmallCapsFont = *-Bold.ttf } ,
+  ItalicFont      = *-Italic.ttf ,
+  BoldItalicFont  = *-BoldItalic.ttf]
+
+
+
+% book names font family and huge
+\titleformat{\chapter}[display]{\Huge\headings\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+% the book name, chapter and verse number at the top of the page
+\fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
+
+% the page number in the bottom centre of each page
+\cfoot{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+
+
+\hypersetup{colorlinks=true, linkcolor=black}
+
+\newcommand{\framesize}{\textwidth}
+\setlength{\headwidth}{\textwidth}
+\setlength{\columnseprule}{0pt}
+
+% space below the page header
+\setheaderspaces{*}{0mm}{*}
+\clubpenalty10000
+\widowpenalty10000
+
+\newlength{\versespacing}
+\setlength{\versespacing}{.16667em plus .08333em}
+\newcommand{\versespace}{\hspace{\versespacing}}
+\frenchspacing
+
+\newcommand\AtPageUpperRight[1]{\AtPageUpperLeft{%
+ \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
+ }}%
+\newcommand\AtPageLowerRight[1]{\AtPageLowerLeft{%
+ \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
+ }}%
+
+\newcommand{\sectionstyle}{\bfseries\raggedright\Large}
+\setsecheadstyle{\sectionstyle}
+\setbeforesecskip{0ex}
+\setaftersecskip{0.1ex}
+
+\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\large}
+\setsubsecheadstyle{\subsectionstyle}
+\setbeforesubsecskip{0ex}
+\setaftersubsecskip{0.1ex}
+
+\makeatletter
+\newcommand\versenumcolor{red}
+\newcommand\chapnumcolor{red}
+\newlength{\biblechapskip}
+  \setlength{\biblechapskip}{1em plus .33em minus .2em}
+\newcounter{biblechapter}
+\newcounter{bibleverse}[biblechapter]
+\renewcommand\chaptername{Book}
+\newcommand{\biblebook}[1]{%
+  \setcounter{biblechapter}{0}
+  \gdef\currbook{#1}
+  \chapter*{#1}
+  \addcontentsline{toc}{chapter}{#1}}
+\newcount\biblechap@svdopt
+\newenvironment{biblechapter}[1][\thebiblechapter]
+  {\biblechap@svdopt=#1
+  \ifnum\c@biblechapter=\biblechap@svdopt\else
+    \advance\biblechap@svdopt by -1\fi
+  \setcounter{biblechapter}{\the\biblechap@svdopt}
+  \stepcounter{biblechapter}
+  \setbeforesecskip{2mm}\setbeforesubsecskip{2mm}
+  \lettrine[lines=3,lhang=0,findent=0pt,nindent=0pt,loversize=0.25]{\lettrinefont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
+  {\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
+\newcommand{\@verse}{\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}}
+\newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{\color{\versenumcolor}\textbf{\thebibleverse}~}\fi\ignorespaces}
+\renewcommand{\verse}{\@verse\@showversenum}
+\newcommand{\verseWithHeading}[1]{%
+  \@verse%
+  \ifnum\c@bibleverse=1{\headings{\sectionstyle#1}\newline}\else\vspace{\baselineskip}\newline\begin{headings}{\sectionstyle#1}\end{headings}\newline\fi\@showversenum}
+\newcommand{\verseWithSubheading}[1]{%
+  \@verse
+  \ifnum\c@bibleverse=1{\headings{\subsectionstyle#1}\newline}\else\vspace{\baselineskip}\newline\begin{headings}{\subsectionstyle#1}\end{headings}\newline\fi\@showversenum}
+\makeatother
+
+%\newcommand{\startornaments}{\AddToShipoutPictureBG{%
+%  \checkoddpage%
+%  \ifoddpage%
+%   \AtPageUpperRight{\put(-100,-55){\pgfornament[width=1.75cm,symmetry=h,color=black]{195}}}%
+%   \AtPageLowerRight{\put(-100,55){\pgfornament[width=1.75cm,symmetry=v,color=black]{194}}}%
+% \else%
+%   \AtPageUpperLeft{\put(10,-55){\pgfornament[width=1.75cm,symmetry=h,color=black]{194}}}%
+%   \AtPageLowerLeft{\put(10,55){\pgfornament[width=1.75cm,symmetry=v,color=black]{195}}}
+% \fi}}
+
+\newcommand{\stopornaments}{\ClearShipoutPictureBG}
+
+\renewcommand{\printparttitle}[1]{%
+  \thispagestyle{empty}%
+  \addcontentsline{toc}{part}{#1}%
+  \vspace*{\fill}%
+  \begin{tikzpicture}[transform shape,every node/.style={inner sep=0pt}]%
+    \node[minimum size=\framesize](vecbox){};%
+  \node[inner sep=6pt, color=black] (text) at (vecbox.center){%
+    \HUGE \headings{\textsc{#1}}};%
+  \node[anchor=north, color=Goldenrod] (base) at (text.south){%
+    \pgfornament[width=0.5*\framesize]{88}};%
+  \end{tikzpicture}%
+  \vspace*{\fill}}
+
+\makechapterstyle{dash-embiggened}{%
+  \chapterstyle{default}
+  \setlength{\beforechapskip}{5\onelineskip}
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapternamenum}{}
+  \renewcommand*{\chapnumfont}{\normalfont\Huge}
+  \settoheight{\midchapskip}{\chapnumfont 1}
+  \renewcommand*{\printchapternum}{\centering \chapnumfont
+    \rule[0.5\midchapskip]{1em}{0.4pt} \thechapter\
+    \rule[0.5\midchapskip]{1em}{0.4pt}}
+  \renewcommand*{\afterchapternum}{\par\nobreak\vskip 0.5\onelineskip}
+  \renewcommand*{\printchapternonum}{\centering
+                 \vphantom{\chapnumfont 1}\afterchapternum}
+  \renewcommand*{\chaptitlefont}{\normalfont\HUGE\scshape}
+  \renewcommand*{\printchaptertitle}[1]{\centering \chaptitlefont ##1}
+  \setlength{\afterchapskip}{2.5\onelineskip}}
+
+\chapterstyle{dash-embiggened}
+
+\newcommand{\columnbreak}{\pagebreak}
+
+\newcommand{\LORD}{\textsc{\headings{Lord}}\xspace}
+\newcommand{\LORDs}{\textsc{\headings{Lord's}}\xspace}
+
+\begin{document}
+
+\title{\Huge \headings{The Holy Bible}}
+\date{}
+\author{}
+
+\frontmatter
+
+\begin{titlingpage}
+\vspace*{\fill}
+
+\begin{tikzpicture}[color=Gold,
+    transform shape,
+    every node/.style={inner sep=0pt}]
+  \node[minimum size=\framesize,fill=Beige!10](vecbox){};
+  \node[anchor=north west] at (vecbox.north west){%
+    \pgfornament[width=0.2*\framesize]{131}};
+  \node[anchor=north east] at (vecbox.north east){%
+    \pgfornament[width=0.2*\framesize,symmetry=v]{131}};
+  \node[anchor=south west] at (vecbox.south west){%
+    \pgfornament[width=0.2*\framesize,symmetry=h]{131}};
+  \node[anchor=south east] at (vecbox.south east){%
+    \pgfornament[width=0.2*\framesize,symmetry=c]{131}};
+  \node[anchor=north] at (vecbox.north){%
+    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
+  \node[anchor=south] at (vecbox.south){%
+    \pgfornament[width=0.6*\framesize]{85}};
+  \node[anchor=north,rotate=90] at (vecbox.west){%
+    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
+  \node[anchor=north,rotate=-90] at (vecbox.east){%
+    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
+  \node[inner sep=6pt, color=black] (text) at (vecbox.center){%
+    \HUGE \textsc{The Holy Bible}};
+  \node[anchor=north, color=Goldenrod] (base) at (text.south){%
+    \pgfornament[width=0.5*\framesize]{71}};
+  \node[anchor=south, color=Goldenrod] at (text.north){%
+    \pgfornament[width=0.5*\framesize,symmetry=h]{71}};
+\end{tikzpicture}
+
+\vspace*{\fill}
+\end{titlingpage}
+
+
+
+\renewcommand{\contentsname}{\headings{Table of Contents}}
+\hypersetup{colorlinks=true ,urlcolor=blue,urlbordercolor={0 1 1}}
+\begin{headings}
+\tableofcontents*
+\end{headings}
+
+
+\mainmatter
+\part*{The Old Testament}
+
+\startornaments
+\input{kjv/old_testament/genesis.tex}\flushcolsend
+\input{kjv/old_testament/exodus.tex}\flushcolsend
+\input{kjv/old_testament/leviticus.tex}\flushcolsend
+\input{kjv/old_testament/numbers.tex}\flushcolsend
+\input{kjv/old_testament/deuteronomy.tex}\flushcolsend
+\input{kjv/old_testament/joshua.tex}\flushcolsend
+\input{kjv/old_testament/judges.tex}\flushcolsend
+\input{kjv/old_testament/ruth.tex}\flushcolsend
+
+\end{document}
