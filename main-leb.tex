@@ -1,4 +1,4 @@
-\documentclass[twopage,twocolumn,showtrims]{memoir}
+\documentclass[twopage,twocolumn,showtrims,9pt]{memoir}
 
 
 \setstocksize{228.6mm}{152.4mm}% 6in x 9in
@@ -45,7 +45,9 @@
 \usepackage{blindtext}
 \usepackage{hyperref}
 \usepackage{multicol}
-
+\usepackage{xifthen}
+\usepackage{csquotes}
+\usepackage{ragged2e}
 
 \setmainfont{notoserif}[
   % Files
@@ -87,17 +89,18 @@
   ItalicFont      = *-Italic.ttf ,
   BoldItalicFont  = *-BoldItalic.ttf]
 
-
+\setlength{\parskip}{\baselineskip}%
 
 % book names font family and huge
 \titleformat{\chapter}[display]{\Huge\headings\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 \titlespacing*{\chapter}{0pt}{0pt}{30pt}
-
+\titleformat{\section}[display]{\Huge\headings\centering}{\sectiontitlename\ \thesection}{20pt}{\Huge}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titleformat{\subsection}[display]{\Large\headings}{\subsectiontitlename\ \thesubsection}{20pt}{\Large}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
 \pagestyle{fancy}
 \fancyhf{}
 
-% the book name, chapter and verse number at the top of the page
-\fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
 
 % the page number in the bottom centre of each page
 \cfoot{\thepage}
@@ -105,7 +108,7 @@
 \renewcommand{\headrulewidth}{0pt}
 
 
-\hypersetup{colorlinks=true, linkcolor=black}
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, urlbordercolor={0 1 1}}
 
 \newcommand{\framesize}{\textwidth}
 \setlength{\headwidth}{\textwidth}
@@ -146,11 +149,21 @@
 \newcounter{biblechapter}
 \newcounter{bibleverse}[biblechapter]
 \renewcommand\chaptername{Book}
-\newcommand{\biblebook}[1]{%
+\newcommand{\customsection}[2][]{%
+  \ifthenelse{\isempty{#1}}%
+    % use the section title name for the TOC contents line
+    {\addcontentsline{toc}{section}{\headings{#2}}\section*{#2}}
+    % permit an override value to be used in TOC
+    {\addcontentsline{toc}{section}{\headings{#1}}\section*{#2}}
+}
+\newcommand{\biblebook}[2][]{%
   \setcounter{biblechapter}{0}
-  \gdef\currbook{#1}
-  \chapter*{#1}
-  \addcontentsline{toc}{chapter}{#1}}
+  \ifthenelse{\isempty{#1}}%
+    % use the section title name for the TOC contents line
+    {\addcontentsline{toc}{chapter}{\headings{#2}}\gdef\currbook{#2}\chapter*{#2}}
+    % permit an override value to be used in TOC
+    {\addcontentsline{toc}{chapter}{\headings{#1}}\gdef\currbook{#2}\chapter*{#2}}
+}
 \newcount\biblechap@svdopt
 \newenvironment{biblechapter}[1][\thebiblechapter]
   {\biblechap@svdopt=#1
@@ -160,7 +173,7 @@
   \stepcounter{biblechapter}
   \setbeforesecskip{2mm}\setbeforesubsecskip{2mm}
   \lettrine[lines=3,lhang=0,findent=0pt,nindent=0pt,loversize=0.25]{\lettrinefont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
-  {\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
+  {\par\vspace{\biblechapskip}\setbeforesecskip{1ex}\setbeforesubsecskip{1ex}}
 \newcommand{\@verse}{\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}}
 \newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{\color{\versenumcolor}\textbf{\thebibleverse}~}\fi\ignorespaces}
 \renewcommand{\verse}{\@verse\@showversenum}
@@ -171,6 +184,10 @@
   \@verse
   \ifnum\c@bibleverse=1{\headings{\subsectionstyle#1}\newline}\else\vspace{\baselineskip}\newline\begin{headings}{\subsectionstyle#1}\end{headings}\newline\fi\@showversenum}
 \makeatother
+
+\newcommand{\lebnote}[2][]{% add lower corner brackets to the word, that are references to footnotes. The second argument is the sequence identifier of the footnote (or omitted)
+  \@#2% @TODO - footnotes
+}
 
 %\newcommand{\startornaments}{\AddToShipoutPictureBG{%
 %  \checkoddpage%
@@ -259,30 +276,25 @@
   \node[anchor=south, color=Goldenrod] at (text.north){%
     \pgfornament[width=0.5*\framesize,symmetry=h]{71}};
 \end{tikzpicture}
-
 \vspace*{\fill}
 \end{titlingpage}
 
 
 
 \renewcommand{\contentsname}{\headings{Table of Contents}}
-\hypersetup{colorlinks=true ,urlcolor=blue,urlbordercolor={0 1 1}}
-\begin{headings}
 \tableofcontents*
-\end{headings}
 
 
-
-
-\onecolumn
 \input{leb/preface.tex}
 
-\twocolumn
 \mainmatter
 
-\part*{The Old Testament}
+\part*{\headings{The Old Testament}}
 
-\startornaments
+% the book name, chapter and verse number at the top of the page
+\fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
+
+
 \input{kjv/old_testament/genesis.tex}\flushcolsend
 \input{kjv/old_testament/exodus.tex}\flushcolsend
 \input{kjv/old_testament/leviticus.tex}\flushcolsend
