@@ -294,6 +294,18 @@ foreach($docBooks as $docBook){
 		$verseNumbers[] = $verseNumber;
 	    }
 	    
+	    if(count($verseNumbers)<1){
+		// this paragraph has content that belongs to the previous verse
+		$paragraphPlainText = trim($paragraph->nodeValue);
+
+		// strip tab characters from the plain text
+		$paragraphPlainText = preg_replace('/\t/', '', $paragraphPlainText);
+
+		
+		$dbVerse->plainText = $dbVerse->plainText.' '.$paragraphPlainText;
+		echo('No verse numbers for '.$docChapter->getAttribute('id').' par '.$paragraphKey.PHP_EOL);
+	    }
+	    
 	    // remove verse number tags that are only a chapter number
 	    foreach($verseNumbers as $verseNumberKey=>$verseNumber){
 		if(!strstr($verseNumber->getAttribute('id'), ':')){
@@ -388,7 +400,7 @@ foreach($docBooks as $docBook){
     }
 
 
-    echo '\input{leb/content/'.$OTNT.'/'.$bookSystemName.'.tex}\flushcolsend'.PHP_EOL;
+    //echo '\input{leb/content/'.$OTNT.'/'.$bookSystemName.'.tex}\flushcolsend'.PHP_EOL;
     
     
     
