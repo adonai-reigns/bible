@@ -7,17 +7,12 @@
 
 \setcolsepandrule{4.5mm}{0pt}
 
-\setulmarginsandblock{14mm}{9mm}{1}
+\setulmarginsandblock{12mm}{9mm}{1}
 
-%\setlrmargins{16mm}{12mm}{*}
-\setlrmarginsandblock{14.5mm}{7.5mm}{*}
-
-%\setheadfoot{26mm}{12mm}
-%\setheaderspaces{*}{24mm}{*}
+\setlrmarginsandblock{13.5mm}{7.5mm}{*}
 
 \checkandfixthelayout 
 
-%\setmarginnotes{1bp}{1bp}{1bp}
 
 \quarkmarks
 
@@ -48,6 +43,7 @@
 \usepackage{xifthen}
 \usepackage{csquotes}
 \usepackage{ragged2e}
+\usepackage{titletoc}
 
 \setmainfont{notoserif}[
   % Files
@@ -152,17 +148,17 @@
 \newcommand{\customsection}[2][]{%
   \ifthenelse{\isempty{#1}}%
     % use the section title name for the TOC contents line
-    {\addcontentsline{toc}{section}{\headings{#2}}\section*{#2}}
+    {\section*{#2}\addcontentsline{toc}{part}{\headings{#2}}}
     % permit an override value to be used in TOC
-    {\addcontentsline{toc}{section}{\headings{#1}}\section*{#2}}
+    {\section*{#2}\addcontentsline{toc}{part}{\headings{#1}}}
 }
 \newcommand{\biblebook}[2][]{%
   \setcounter{biblechapter}{0}
   \ifthenelse{\isempty{#1}}%
     % use the section title name for the TOC contents line
-    {\addcontentsline{toc}{chapter}{\headings{#2}}\gdef\currbook{#2}\chapter*{#2}}
+    {\gdef\currbook{#2}\chapter*{#2}\addcontentsline{toc}{chapter}{\headings{#2}}}
     % permit an override value to be used in TOC
-    {\addcontentsline{toc}{chapter}{\headings{#1}}\gdef\currbook{#2}\chapter*{#2}}
+    {\gdef\currbook{#2}\chapter*{#2}\addcontentsline{toc}{chapter}{\headings{#1}}}
 }
 \newcount\biblechap@svdopt
 \newenvironment{biblechapter}[1][\thebiblechapter]
@@ -281,11 +277,41 @@
 
 
 
-\renewcommand{\contentsname}{\headings{Table of Contents}}
-\tableofcontents*
 
 
-\input{leb/preface.tex}
+
+\onecolumn
+\renewcommand{\contentsname}{\headings{Books of The Holy Bible}}
+\titlecontents{part}[3mm]{\normalsize\bfseries}{PART\space\thecontentslabel:\space\MakeUppercase}{}{\normalfont\dotfill\makebox[12mm][l]{\thecontentspage}}
+\titlecontents{chapter}[3mm]{\vspace{-10pt}\normalsize}{}{}{\dotfill\makebox[12mm][l]{\thecontentspage}}
+
+
+% some help from % https://tex.stackexchange.com/questions/389319/making-the-second-column-of-the-table-of-contents-clear-the-page-header
+\makeatletter  
+\singlespacing
+\begingroup % start a TeX group
+\color{colortoc}% or whatever color you wish to use
+\chapter*{\contentsname
+  \@mkboth{%
+    \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}
+% If you want to turn off columns being forced to equal height, use the starred version \begin{multicols*}{2}.
+\begin{multicols}{2}
+
+  \@starttoc{toc}
+\end{multicols}
+\endgroup   % end of TeX group
+\makeatother
+
+
+\twocolumn
+
+
+
+
+
+
+
+\input{leb/content/preface.tex}
 
 \mainmatter
 
@@ -295,13 +321,83 @@
 \fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
 
 
-\input{kjv/old_testament/genesis.tex}\flushcolsend
-\input{kjv/old_testament/exodus.tex}\flushcolsend
-\input{kjv/old_testament/leviticus.tex}\flushcolsend
-\input{kjv/old_testament/numbers.tex}\flushcolsend
-\input{kjv/old_testament/deuteronomy.tex}\flushcolsend
-\input{kjv/old_testament/joshua.tex}\flushcolsend
-\input{kjv/old_testament/judges.tex}\flushcolsend
-\input{kjv/old_testament/ruth.tex}\flushcolsend
+
+\input{leb/content/OT/genesis.tex}\flushcolsend
+\input{leb/content/OT/exodus.tex}\flushcolsend
+
+\input{leb/content/OT/leviticus.tex}\flushcolsend
+\input{leb/content/OT/numbers.tex}\flushcolsend
+\input{leb/content/OT/deuteronomy.tex}\flushcolsend
+\input{leb/content/OT/joshua.tex}\flushcolsend
+\input{leb/content/OT/judges.tex}\flushcolsend
+\input{leb/content/OT/ruth.tex}\flushcolsend
+\input{leb/content/OT/1samuel.tex}\flushcolsend
+\input{leb/content/OT/2samuel.tex}\flushcolsend
+\input{leb/content/OT/1kings.tex}\flushcolsend
+\input{leb/content/OT/2kings.tex}\flushcolsend
+\input{leb/content/OT/1chronicles.tex}\flushcolsend
+\input{leb/content/OT/2chronicles.tex}\flushcolsend
+\input{leb/content/OT/ezra.tex}\flushcolsend
+\input{leb/content/OT/nehemiah.tex}\flushcolsend
+\input{leb/content/OT/esther.tex}\flushcolsend
+\input{leb/content/OT/job.tex}\flushcolsend
+\input{leb/content/OT/psalms.tex}\flushcolsend
+\input{leb/content/OT/proverbs.tex}\flushcolsend
+\input{leb/content/OT/ecclesiastes.tex}\flushcolsend
+\input{leb/content/OT/songofsolomon.tex}\flushcolsend
+\input{leb/content/OT/isaiah.tex}\flushcolsend
+\input{leb/content/OT/jeremiah.tex}\flushcolsend
+\input{leb/content/OT/lamentations.tex}\flushcolsend
+\input{leb/content/OT/ezekiel.tex}\flushcolsend
+\input{leb/content/OT/daniel.tex}\flushcolsend
+\input{leb/content/OT/hosea.tex}\flushcolsend
+\input{leb/content/OT/joel.tex}\flushcolsend
+\input{leb/content/OT/amos.tex}\flushcolsend
+\input{leb/content/OT/obadiah.tex}\flushcolsend
+\input{leb/content/OT/jonah.tex}\flushcolsend
+\input{leb/content/OT/micah.tex}\flushcolsend
+\input{leb/content/OT/nahum.tex}\flushcolsend
+\input{leb/content/OT/habakkuk.tex}\flushcolsend
+\input{leb/content/OT/zephaniah.tex}\flushcolsend
+\input{leb/content/OT/haggai.tex}\flushcolsend
+\input{leb/content/OT/zechariah.tex}\flushcolsend
+\input{leb/content/OT/malachi.tex}\flushcolsend
+
+
+
+\setlrmarginsandblock{13.5mm}{8.5mm}{*}
+
+
+\part*{\headings{The New Testament}}
+
+
+\input{leb/content/NT/matthew.tex}\flushcolsend
+\input{leb/content/NT/mark.tex}\flushcolsend
+\input{leb/content/NT/luke.tex}\flushcolsend
+
+\input{leb/content/NT/john.tex}\flushcolsend
+\input{leb/content/NT/acts.tex}\flushcolsend
+\input{leb/content/NT/romans.tex}\flushcolsend
+\input{leb/content/NT/1corinthians.tex}\flushcolsend
+\input{leb/content/NT/2corinthians.tex}\flushcolsend
+\input{leb/content/NT/galatians.tex}\flushcolsend
+\input{leb/content/NT/ephesians.tex}\flushcolsend
+\input{leb/content/NT/philippians.tex}\flushcolsend
+\input{leb/content/NT/colossians.tex}\flushcolsend
+\input{leb/content/NT/1thessalonians.tex}\flushcolsend
+\input{leb/content/NT/2thessalonians.tex}\flushcolsend
+\input{leb/content/NT/1timothy.tex}\flushcolsend
+\input{leb/content/NT/2timothy.tex}\flushcolsend
+\input{leb/content/NT/titus.tex}\flushcolsend
+\input{leb/content/NT/philemon.tex}\flushcolsend
+\input{leb/content/NT/hebrews.tex}\flushcolsend
+\input{leb/content/NT/james.tex}\flushcolsend
+\input{leb/content/NT/1peter.tex}\flushcolsend
+\input{leb/content/NT/2peter.tex}\flushcolsend
+\input{leb/content/NT/1john.tex}\flushcolsend
+\input{leb/content/NT/2john.tex}\flushcolsend
+\input{leb/content/NT/3john.tex}\flushcolsend
+\input{leb/content/NT/jude.tex}\flushcolsend
+\input{leb/content/NT/revelation.tex}\flushcolsend
 
 \end{document}
