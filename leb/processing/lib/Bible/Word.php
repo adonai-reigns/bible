@@ -64,18 +64,22 @@ class Bible_Word extends Bible_Base
 	// remove notes  // @TODO: move notes into the footer
 	$plainText = preg_replace('/(:\|N\|.*\|N\|:)/U', '', $text);
 
-	// "idiom" and "supplied" markups
+	// "Important notes", "idiom" and "supplied" markups
 	
 	$plainText = str_replace(array(
+	    '|IN|:',
 	    '|S|:',
 	    '|I|:',
+	    ':|IN|',
 	    ':|S|', 
 	    ':|I|'  
 	), array(
 	    '}',
 	    '}',
-	    '\textit{', // @TODO: better choice of markup
-	    '\textit{' // @TODO: better choice of markup
+	    '}',
+	    '\textit{', // @TODO: better choice of markup for important notes
+	    '\textit{', // @TODO: better choice of markup for supplied contexts
+	    '\textit{' // @TODO: better choice of markup for idioms
 	), $plainText);
 	
 	

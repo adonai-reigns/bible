@@ -106,6 +106,11 @@ $sourceXML = str_replace('Yahweh', 'Adonai', $sourceXML);
 // remove empty paragraphs
 $sourceXML = str_replace("<p />\r\n", '', $sourceXML);
 
+
+// there are some very special notes that are denoted by special characters. Most fonts can't support those characters, we will need to create a new macro for them
+$sourceXML = str_replace('〚', ':|IN|', $sourceXML);
+$sourceXML = str_replace('〛', '|IN|:', $sourceXML);
+
 // paragraphs and lists are treated the same, in our view. (LEB's XML uses ul's to denote quotations)
 // we will transform every ul into a paragraph
 $sourceXML = str_replace('<ul>', '<p class="quote">', $sourceXML);
@@ -303,7 +308,6 @@ foreach($docBooks as $docBook){
 
 		
 		$dbVerse->plainText = $dbVerse->plainText.' '.$paragraphPlainText;
-		echo('No verse numbers for '.$docChapter->getAttribute('id').' par '.$paragraphKey.PHP_EOL);
 	    }
 	    
 	    // remove verse number tags that are only a chapter number
@@ -329,7 +333,7 @@ foreach($docBooks as $docBook){
 	    
 	    foreach($verseNumbers as $verseNumberKey=>$verseNumber){
 		// replace verse numbers with token pattern
-		if($verseNumber->textContent !== ':|0|::|VT|:'){
+		if($verseNumber->textContent !== ':|0|::|VT|:'){ // exclude operating on verse titles (eg: many of the psalms have them)
 		    $verseNumber->textContent = ":|{$verseNumber->textContent}|:";
 		}
 	    }
@@ -400,7 +404,7 @@ foreach($docBooks as $docBook){
     }
 
 
-    //echo '\input{leb/content/'.$OTNT.'/'.$bookSystemName.'.tex}\flushcolsend'.PHP_EOL;
+    echo '\input{leb/content/'.$OTNT.'/'.$bookSystemName.'.tex}\flushcolsend'.PHP_EOL;
     
     
     
