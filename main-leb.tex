@@ -1,7 +1,7 @@
-\documentclass[twopage,twocolumn,showtrims,10pt,openany]{memoir}
+\documentclass[twopage,twocolumn,10pt,openany]{memoir}
 
 
-\setstocksize{228.6mm}{152.4mm}% 6in x 9in
+\setstocksize{9in}{6in}% 6in x 9in
 \settrimmedsize{8.5in}{5.5in}{*}
 \settrims{.25in}{.25in}
 
@@ -9,7 +9,7 @@
 
 \setulmarginsandblock{12mm}{9mm}{1}
 
-\setlrmarginsandblock{13.5mm}{7.5mm}{*}
+\setlrmarginsandblock{0.25in}{0in}{*}
 
 \checkandfixthelayout 
 
@@ -128,15 +128,15 @@
  \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
  }}%
 
-\newcommand{\sectionstyle}{\bfseries\raggedright\normaltext\fontsize{11.5}{12.5}\selectfont\headings}
+\newcommand{\sectionstyle}{\bfseries\raggedright\fontsize{11.5}{9}\selectfont\headings}
 \setsecheadstyle{\sectionstyle}
 \setbeforesecskip{0ex}
-\setaftersecskip{0.1ex}
+\setaftersecskip{0}
 
-\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\fontsize{10}{11}\selectfont\headings}
+\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\fontsize{10}{9}\selectfont\headings}
 \setsubsecheadstyle{\subsectionstyle}
 \setbeforesubsecskip{0ex}
-\setaftersubsecskip{0.1ex}
+\setaftersubsecskip{0}
 
 \makeatletter
 \newcommand\versenumcolor{red}
@@ -168,9 +168,9 @@
     \advance\biblechap@svdopt by -1\fi
   \setcounter{biblechapter}{\the\biblechap@svdopt}
   \stepcounter{biblechapter}
-  \setbeforesecskip{2mm}\setbeforesubsecskip{2mm}
-  \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,realheight=true,lraise=0.4]{\lettrinefont\fontsize{30}{10}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
-  {\par\vspace{\biblechapskip}\setbeforesecskip{1ex}\setbeforesubsecskip{1ex}}
+  \setbeforesecskip{9pt}\setbeforesubsecskip{9pt}
+  \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,lraise=0.4]{\lettrinefont\fontsize{30}{10}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
+  {\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
 \newcommand{\@verse}{\fontsize{11pt}{9pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}}
 \newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{\color{\versenumcolor}{\thebibleverse}~}\fi\ignorespaces}
 \renewcommand{\verse}{\@verse\@showversenum}
@@ -384,7 +384,7 @@
 
 
 
-\setlrmarginsandblock{13.5mm}{8.5mm}{*}
+\setlrmarginsandblock{0.25in}{0in}{*}
 \part*{\headings{The New Testament}}
 
 % a blank page on the back of the page - lext page on a new right-sided page
