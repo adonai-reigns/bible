@@ -1,4 +1,4 @@
-\documentclass[twopage,twocolumn,showtrims,9pt]{memoir}
+\documentclass[twopage,twocolumn,showtrims,10pt]{memoir}
 
 
 \setstocksize{228.6mm}{152.4mm}% 6in x 9in
@@ -45,16 +45,16 @@
 \usepackage{ragged2e}
 \usepackage{titletoc}
 
-\setmainfont{notoserif}[
+\setmainfont{frankrhuel}[
   % Files
-  Path      = fonts/noto-serif/ ,
+  Path      = fonts/frankrhuel/ ,
   % Fonts
-  UprightFont     = NotoSerif-Regular.ttf ,
-  UprightFeatures = { SmallCapsFont = NotoSerif-Regular.ttf, } ,
-  BoldFont        = NotoSerif-Bold.ttf,
-  BoldFeatures    = { SmallCapsFont = NotoSerif-Bold.ttf } ,
-  ItalicFont      = NotoSerif-Italic.ttf ,
-  BoldItalicFont  = NotoSerif-BoldItalic.ttf ,
+  UprightFont     = FrankRuehlCLM-Medium.ttf ,
+  UprightFeatures = { SmallCapsFont = FrankRuehlCLM-Medium.ttf, } ,
+  BoldFont        = FrankRuehlCLM-Bold.ttf,
+  BoldFeatures    = { SmallCapsFont = FrankRuehlCLM-Bold.ttf } ,
+  ItalicFont      = FrankRuehlCLM-MediumOblique.ttf ,
+  BoldItalicFont  = FrankRuehlCLM-BoldOblique.ttf ,
   % Features
   Numbers = OldStyle ]
 
@@ -127,12 +127,12 @@
  \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
  }}%
 
-\newcommand{\sectionstyle}{\bfseries\raggedright\Large}
+\newcommand{\sectionstyle}{\bfseries\raggedright\normaltext\fontsize{11.5}{12.5}\selectfont\headings}
 \setsecheadstyle{\sectionstyle}
 \setbeforesecskip{0ex}
 \setaftersecskip{0.1ex}
 
-\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\large}
+\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\fontsize{10}{11}\selectfont\headings}
 \setsubsecheadstyle{\subsectionstyle}
 \setbeforesubsecskip{0ex}
 \setaftersubsecskip{0.1ex}
@@ -141,7 +141,7 @@
 \newcommand\versenumcolor{red}
 \newcommand\chapnumcolor{red}
 \newlength{\biblechapskip}
-  \setlength{\biblechapskip}{1em plus .33em minus .2em}
+  \setlength{\biblechapskip}{0}
 \newcounter{biblechapter}
 \newcounter{bibleverse}[biblechapter]
 \renewcommand\chaptername{Book}
@@ -168,17 +168,17 @@
   \setcounter{biblechapter}{\the\biblechap@svdopt}
   \stepcounter{biblechapter}
   \setbeforesecskip{2mm}\setbeforesubsecskip{2mm}
-  \lettrine[lines=3,lhang=0,findent=0pt,nindent=0pt,loversize=0.25]{\lettrinefont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
+  \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,realheight=true,lraise=0.4]{\lettrinefont\fontsize{30}{10}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
   {\par\vspace{\biblechapskip}\setbeforesecskip{1ex}\setbeforesubsecskip{1ex}}
-\newcommand{\@verse}{\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}}
-\newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{\color{\versenumcolor}\textbf{\thebibleverse}~}\fi\ignorespaces}
+\newcommand{\@verse}{\fontsize{11pt}{9pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}}
+\newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{\color{\versenumcolor}{\thebibleverse}~}\fi\ignorespaces}
 \renewcommand{\verse}{\@verse\@showversenum}
 \newcommand{\verseWithHeading}[1]{%
   \@verse%
-  \ifnum\c@bibleverse=1{\headings{\sectionstyle#1}\newline}\else\vspace{\baselineskip}\newline\begin{headings}{\sectionstyle#1}\end{headings}\newline\fi\@showversenum}
+  \ifnum\c@bibleverse=1{\sectionstyle#1\newline}\else\vspace{\baselineskip}\newline{\sectionstyle#1}\newline\fi\@showversenum}
 \newcommand{\verseWithSubheading}[1]{%
   \@verse
-  \ifnum\c@bibleverse=1{\headings{\subsectionstyle#1}\newline}\else\vspace{\baselineskip}\newline\begin{headings}{\subsectionstyle#1}\end{headings}\newline\fi\@showversenum}
+  \ifnum\c@bibleverse=1{\subsectionstyle#1\newline}\else\vspace{\baselineskip}\newline{\subsectionstyle#1}\newline\fi\@showversenum}
 \makeatother
 
 \newcommand{\lebnote}[2][]{% add lower corner brackets to the word, that are references to footnotes. The second argument is the sequence identifier of the footnote (or omitted)
@@ -283,7 +283,7 @@
 \onecolumn
 \renewcommand{\contentsname}{\headings{Books of The Holy Bible}}
 \titlecontents{part}[3mm]{\normalsize\bfseries}{PART\space\thecontentslabel:\space\MakeUppercase}{}{\normalfont\dotfill\makebox[12mm][l]{\thecontentspage}}
-\titlecontents{chapter}[3mm]{\vspace{-10pt}\normalsize}{}{}{\dotfill\makebox[12mm][l]{\thecontentspage}}
+\titlecontents{chapter}[3mm]{\vspace{-12pt}\normalsize}{}{}{\dotfill\makebox[12mm][l]{\thecontentspage}}
 
 
 % some help from % https://tex.stackexchange.com/questions/389319/making-the-second-column-of-the-table-of-contents-clear-the-page-header
@@ -309,6 +309,10 @@
 
 
 
+% a blank page on the back of the contents page - places preface on a new right-sided page
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 
 \input{leb/content/preface.tex}
