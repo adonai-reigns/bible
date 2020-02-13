@@ -75,10 +75,10 @@ class Bible_Word extends Bible_Base
 	    ':|I|'  
 	), array(
 	    '}',
-	    '}',
+	    '',
 	    '}',
 	    '\textit{', // @TODO: better choice of markup for important notes
-	    '\textit{', // @TODO: better choice of markup for supplied contexts
+	    '', // @TODO: better choice of markup for supplied contexts
 	    '\textit{' // @TODO: better choice of markup for idioms
 	), $plainText);
 	

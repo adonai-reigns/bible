@@ -1,4 +1,4 @@
-\documentclass[twopage,twocolumn,showtrims,10pt]{memoir}
+\documentclass[twopage,twocolumn,showtrims,10pt,openany]{memoir}
 
 
 \setstocksize{228.6mm}{152.4mm}% 6in x 9in
@@ -44,6 +44,7 @@
 \usepackage{csquotes}
 \usepackage{ragged2e}
 \usepackage{titletoc}
+\usepackage{soul}
 
 \setmainfont{frankrhuel}[
   % Files
@@ -309,7 +310,7 @@
 
 
 
-% a blank page on the back of the contents page - places preface on a new right-sided page
+% a blank page on the back of the page - lext page on a new right-sided page
 \newpage
 \thispagestyle{empty}
 \mbox{}
@@ -321,14 +322,28 @@
 
 \part*{\headings{The Old Testament}}
 
+% a blank page on the back of the page - lext page on a new right-sided page
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+
 % the book name, chapter and verse number at the top of the page
 \fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
 
 
 
 \input{leb/content/OT/genesis.tex}\flushcolsend
-\input{leb/content/OT/exodus.tex}\flushcolsend
 
+% @TODO: check that this has not disturbed the fact that New Testament page should open on the right side
+% a blank page on the back of the page - lext page on a new right-sided page
+% The purpose of this page is to ensure that the New Testament part Title Page is opening on the right-hand side
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+
+\input{leb/content/OT/exodus.tex}\flushcolsend
 \input{leb/content/OT/leviticus.tex}\flushcolsend
 \input{leb/content/OT/numbers.tex}\flushcolsend
 \input{leb/content/OT/deuteronomy.tex}\flushcolsend
@@ -370,9 +385,13 @@
 
 
 \setlrmarginsandblock{13.5mm}{8.5mm}{*}
-
-
 \part*{\headings{The New Testament}}
+
+% a blank page on the back of the page - lext page on a new right-sided page
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
 
 
 \input{leb/content/NT/matthew.tex}\flushcolsend
