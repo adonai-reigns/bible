@@ -2,26 +2,13 @@
 
 
 \setstocksize{9in}{6in}% 6in x 9in
-\settrimmedsize{8.5in}{5.5in}{*}
-\settrims{.25in}{.25in}
-
-\setcolsepandrule{4.5mm}{0pt}
-
-\setulmarginsandblock{12mm}{9mm}{1}
-
-\setlrmarginsandblock{0.25in}{0in}{*}
-
-\checkandfixthelayout 
+\settrimmedsize{9in}{6in}{*}
+\settrims{0in}{0in}
 
 
 \quarkmarks
 
-%\usepackage{atbegshi}
-%\AtBeginShipout{\special{pdf: put @thispage <</TrimBox [36.0 36.0 612 810]>>}}
-%\special{pdf: put @thispage <</TrimBox [36.0 36.0 612 810]>>}
 
-
-%\usepackage[pass,b5paper,inner=16mm,outer=12mm,top=24mm,bottom=8mm]{geometry}
 \usepackage{lipsum}
 \usepackage{fixltx2e}
 \usepackage{xspace}
@@ -45,6 +32,9 @@
 \usepackage{ragged2e}
 \usepackage{titletoc}
 \usepackage{soul}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{enumitem}
 
 \setmainfont{frankrhuel}[
   % Files
@@ -116,10 +106,14 @@
 \clubpenalty10000
 \widowpenalty10000
 
+
+\iffalse
 \newlength{\versespacing}
-\setlength{\versespacing}{.16667em plus .08333em}
+\setlength{\versespacing}{1.16667em plus .08333em}
 \newcommand{\versespace}{\hspace{\versespacing}}
 \frenchspacing
+\fi
+
 
 \newcommand\AtPageUpperRight[1]{\AtPageUpperLeft{%
  \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
@@ -142,7 +136,7 @@
 \newcommand\versenumcolor{red}
 \newcommand\chapnumcolor{red}
 \newlength{\biblechapskip}
-  \setlength{\biblechapskip}{0}
+  \setlength{\biblechapskip}{0em plus .33em minus .2em}
 \newcounter{biblechapter}
 \newcounter{bibleverse}[biblechapter]
 \renewcommand\chaptername{Book}
@@ -237,13 +231,40 @@
 
 \begin{document}
 
+
+\frontmatter
+
+\setlrmarginsandblock{0.5in}{0.375in}{*}
+\setulmarginsandblock{0.5in}{0.75in}{1}
+
+\checkandfixthelayout 
+
+
+
+\begin{titlingpage}
+
+% a tribute to the cause for this publication.
+\includepdf{leb/content/pictures/sierra-foxtrot-idfys-white.png}
+
+\end{titlingpage}
+
+
+
+
+
+
+
+
+\begin{titlingpage}
+
 \title{\Huge \headings{The Holy Bible}}
 \date{}
 \author{}
 
-\frontmatter
+%\setlrmarginsandblock{0.5in}{0.375in}{*}
+\checkandfixthelayout 
 
-\begin{titlingpage}
+
 \vspace*{\fill}
 
 \begin{tikzpicture}[color=Gold,
@@ -267,7 +288,7 @@
   \node[anchor=north,rotate=-90] at (vecbox.east){%
     \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
   \node[inner sep=6pt, color=black] (text) at (vecbox.center){%
-    \HUGE \textsc{The Holy Bible}};
+    \HUGE \textsc{\headings{The Holy Bible}}};
   \node[anchor=north, color=Goldenrod] (base) at (text.south){%
     \pgfornament[width=0.5*\framesize]{71}};
   \node[anchor=south, color=Goldenrod] at (text.north){%
@@ -283,6 +304,12 @@
 
 \onecolumn
 \renewcommand{\contentsname}{\headings{Books of The Holy Bible}}
+
+
+\setcolsepandrule{0.25in}{0pt}
+\setlrmarginsandblock{0.75in}{0.75in}{*}
+\checkandfixthelayout 
+
 \titlecontents{part}[3mm]{\normalsize\bfseries}{PART\space\thecontentslabel:\space\MakeUppercase}{}{\normalfont\dotfill\makebox[12mm][l]{\thecontentspage}}
 \titlecontents{chapter}[3mm]{\vspace{-12pt}\normalsize}{}{}{\dotfill\makebox[12mm][l]{\thecontentspage}}
 
@@ -309,40 +336,48 @@
 
 
 
-
 % a blank page on the back of the page - lext page on a new right-sided page
 \newpage
 \thispagestyle{empty}
 \mbox{}
 
+\setlrmarginsandblock{0.5in}{0.3125in}{*}
+\checkandfixthelayout 
 
 \input{leb/content/preface.tex}
 
 \mainmatter
 
+
+
+%\setlrmarginsandblock{0.5in}{0.375in}{*}
+\checkandfixthelayout 
+
 \part*{\headings{The Old Testament}}
 
-% a blank page on the back of the page - lext page on a new right-sided page
+% a blank page on the back of the page - next page on a new right-sided page
+\clearpage
 \newpage
 \thispagestyle{empty}
 \mbox{}
+
+\setcolsepandrule{0.25in}{0}
+%\setlrmarginsandblock{0.5in}{0.3125in}{*}
+\checkandfixthelayout 
 
 
 % the book name, chapter and verse number at the top of the page
 \fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
+\fancyhfoffset[RO,LE]{0.375pt}
 
+\setlength\textwidth{5.1875in\relax}
+\setlength\columnwidth{2.4625in\relax}
+\setlength\columnsep{0.2625in\relax}
 
+\endpage
+\newpage
 
 \input{leb/content/OT/genesis.tex}\flushcolsend
-
-% @TODO: check that this has not disturbed the fact that New Testament page should open on the right side
-% a blank page on the back of the page - lext page on a new right-sided page
-% The purpose of this page is to ensure that the New Testament part Title Page is opening on the right-hand side
-\newpage
-\thispagestyle{empty}
-\mbox{}
-
-
 \input{leb/content/OT/exodus.tex}\flushcolsend
 \input{leb/content/OT/leviticus.tex}\flushcolsend
 \input{leb/content/OT/numbers.tex}\flushcolsend
@@ -382,17 +417,22 @@
 \input{leb/content/OT/zechariah.tex}\flushcolsend
 \input{leb/content/OT/malachi.tex}\flushcolsend
 
-
-
-\setlrmarginsandblock{0.25in}{0in}{*}
-\part*{\headings{The New Testament}}
-
-% a blank page on the back of the page - lext page on a new right-sided page
+% a blank page on the back of the page - next page on a new right-sided page
+\clearpage
 \newpage
 \thispagestyle{empty}
 \mbox{}
 
+%\setlrmarginsandblock{0.5in}{0.375in}{*}
+\part*{\headings{The New Testament}}
 
+% a blank page on the back of the page - next page on a new right-sided page
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+%\setlrmarginsandblock{0.5in}{0.3125in}{*}
+\checkandfixthelayout 
 
 \input{leb/content/NT/matthew.tex}\flushcolsend
 \input{leb/content/NT/mark.tex}\flushcolsend
@@ -422,5 +462,53 @@
 \input{leb/content/NT/3john.tex}\flushcolsend
 \input{leb/content/NT/jude.tex}\flushcolsend
 \input{leb/content/NT/revelation.tex}\flushcolsend
+
+
+% a blank page on the back of the page - next page on a new right-sided page
+\clearpage
+\newpage
+
+
+\addcontentsline{toc}{part}{\headings{Extra Content}}
+
+\addcontentsline{toc}{chapter}{\headings{Concordance}}
+
+% now we are going to include a concordance. The NWT has a fairly handy one and it is easily accesible.
+% @TOTO: create a customised concordance
+
+\includepdf[pages=-]{leb/content/concordance-6x9.pdf}
+
+\clearpage
+\newpage
+
+% let's also include a few of the maps from the NWT. It is nice to look at maps sometimes, when considering the geography relating to events.
+\addcontentsline{toc}{chapter}{\headings{Diagrams and Maps}}
+
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/settlement-of-the-promised-land.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/israel-in-times-of-king-david-and-solomon.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/israel-in-time-of-jesus.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/second-temple-mount.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/spread-of-christianity.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/units-of-measure.png}
+
+
+
+
+\begin{titlingpage}
+
+\begin{centering}
+\begin{headings}
+\Huge\bfseries-- \ul{Notes} --
+\end{headings}
+
+
+\end{centering}
+\clearpage
+\newpage
+
+\end{titlingpage}
+
+
+
 
 \end{document}
