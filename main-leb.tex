@@ -35,6 +35,8 @@
 \usepackage{pdfpages}
 \usepackage{graphicx}
 \usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage[stable,para,hang,perpage]{footmisc}
 
 \setmainfont{frankrhuel}[
   % Files
@@ -92,7 +94,14 @@
 % the page number in the bottom centre of each page
 \cfoot{\thepage}
 
-\renewcommand{\headrulewidth}{0pt}
+% set the footnote font style
+\renewcommand{\footnotelayout}{\small\frankrhuel}
+
+% cause the footnotes to be listed inline rather than on new lines
+\footglue=.25em plus.15em minus.15em
+
+\renewcommand{\headrule}{\hbox to\headwidth{%
+    \color{white}\leaders\hrule height 0 \hfill}}
 
 
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, urlbordercolor={0 1 1}}
@@ -155,6 +164,17 @@
     % permit an override value to be used in TOC
     {\gdef\currbook{#2}\chapter*{#2}\addcontentsline{toc}{chapter}{\headings{#1}}}
 }
+
+% our custom macro for footnotes
+\newcommand{\lebnote}[1]{%
+  %\footnote{\label{bibleverse}#1}
+  \in@{:|NP|:}{#1}% ignore notes with a setting of "no print"
+  \ifin@{}\else{%
+    \footnote{#1}%
+  }
+  \fi
+}
+
 \newcount\biblechap@svdopt
 \newenvironment{biblechapter}[1][\thebiblechapter]
   {\biblechap@svdopt=#1
@@ -162,18 +182,18 @@
     \advance\biblechap@svdopt by -1\fi
   \setcounter{biblechapter}{\the\biblechap@svdopt}
   \stepcounter{biblechapter}
-  \setbeforesecskip{9pt}\setbeforesubsecskip{9pt}
+  \setbeforesecskip{0}\setbeforesubsecskip{0}
   \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,lraise=0.4]{\lettrinefont\fontsize{30}{10}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
   {\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
-\newcommand{\@verse}{\fontsize{11pt}{9pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}}
+\newcommand{\@verse}{\fontsize{10.65pt}{10.65pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}}
 \newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{\color{\versenumcolor}{\thebibleverse}~}\fi\ignorespaces}
 \renewcommand{\verse}{\@verse\@showversenum}
 \newcommand{\verseWithHeading}[1]{%
   \@verse%
-  \ifnum\c@bibleverse=1{\sectionstyle#1\newline}\else\vspace{\baselineskip}\newline{\sectionstyle#1}\newline\fi\@showversenum}
+  \ifnum\c@bibleverse=1{\sectionstyle#1\newline}\else\vspace{5.2}\newline{\sectionstyle#1}\newline\fi\@showversenum}
 \newcommand{\verseWithSubheading}[1]{%
   \@verse
-  \ifnum\c@bibleverse=1{\subsectionstyle#1\newline}\else\vspace{\baselineskip}\newline{\subsectionstyle#1}\newline\fi\@showversenum}
+  \ifnum\c@bibleverse=1{\subsectionstyle#1\newline}\else\vspace{5.2}\newline{\subsectionstyle#1}\newline\fi\@showversenum}
 \makeatother
 
 \newcommand{\lebnote}[2][]{% add lower corner brackets to the word, that are references to footnotes. The second argument is the sequence identifier of the footnote (or omitted)
@@ -234,7 +254,7 @@
 
 \frontmatter
 
-\setlrmarginsandblock{0.5in}{0.375in}{*}
+\setlrmarginsandblock{0.4375in}{0.3125in}{*}
 \setulmarginsandblock{0.5in}{0.75in}{1}
 
 \checkandfixthelayout 
@@ -261,10 +281,10 @@
 \date{}
 \author{}
 
-%\setlrmarginsandblock{0.5in}{0.375in}{*}
+
+\setlrmarginsandblock{0.75in}{0.75in}{*}
+
 \checkandfixthelayout 
-
-
 \vspace*{\fill}
 
 \begin{tikzpicture}[color=Gold,
@@ -300,16 +320,11 @@
 
 
 
-
-
 \onecolumn
 \renewcommand{\contentsname}{\headings{Books of The Holy Bible}}
 
 
-\setcolsepandrule{0.25in}{0pt}
-\setlrmarginsandblock{0.75in}{0.75in}{*}
-\checkandfixthelayout 
-
+% toc font styles
 \titlecontents{part}[3mm]{\normalsize\bfseries}{PART\space\thecontentslabel:\space\MakeUppercase}{}{\normalfont\dotfill\makebox[12mm][l]{\thecontentspage}}
 \titlecontents{chapter}[3mm]{\vspace{-12pt}\normalsize}{}{}{\dotfill\makebox[12mm][l]{\thecontentspage}}
 
@@ -341,17 +356,23 @@
 \thispagestyle{empty}
 \mbox{}
 
-\setlrmarginsandblock{0.5in}{0.3125in}{*}
-\checkandfixthelayout 
-
 \input{leb/content/preface.tex}
 
 \mainmatter
 
 
+\setlrmarginsandblock{0.4375in}{0.3125in}{*}
 
-%\setlrmarginsandblock{0.5in}{0.375in}{*}
+% the book name, chapter and verse number at the top of the page
+\setcolsepandrule{0.25in}{0pt}
+\fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
+\fancyhfoffset[RO]{1pt}
+
+\setlength\textwidth{5.25in}
+\setlength\columnwidth{2.5in}
+\setlength\columnsep{0.25in}
 \checkandfixthelayout 
+
 
 \part*{\headings{The Old Testament}}
 
@@ -360,25 +381,19 @@
 \newpage
 \thispagestyle{empty}
 \mbox{}
-
-\setcolsepandrule{0.25in}{0}
-%\setlrmarginsandblock{0.5in}{0.3125in}{*}
-\checkandfixthelayout 
+\endpage
+\newpage
 
 
-% the book name, chapter and verse number at the top of the page
-\fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
-\fancyhfoffset[RO,LE]{0.375pt}
-
-\setlength\textwidth{5.1875in\relax}
-\setlength\columnwidth{2.4625in\relax}
-\setlength\columnsep{0.2625in\relax}
 
 \endpage
 \newpage
 
+
 \input{leb/content/OT/genesis.tex}\flushcolsend
 \input{leb/content/OT/exodus.tex}\flushcolsend
+
+
 \input{leb/content/OT/leviticus.tex}\flushcolsend
 \input{leb/content/OT/numbers.tex}\flushcolsend
 \input{leb/content/OT/deuteronomy.tex}\flushcolsend
@@ -416,6 +431,14 @@
 \input{leb/content/OT/haggai.tex}\flushcolsend
 \input{leb/content/OT/zechariah.tex}\flushcolsend
 \input{leb/content/OT/malachi.tex}\flushcolsend
+\clearpage
+
+
+\setlrmarginsandblock{0in}{0.75in}{*}
+\checkandfixthelayout 
+
+\part*{\headings{The New Testament}}
+
 
 % a blank page on the back of the page - next page on a new right-sided page
 \clearpage
@@ -423,16 +446,10 @@
 \thispagestyle{empty}
 \mbox{}
 
-%\setlrmarginsandblock{0.5in}{0.375in}{*}
-\part*{\headings{The New Testament}}
 
-% a blank page on the back of the page - next page on a new right-sided page
-\newpage
-\thispagestyle{empty}
-\mbox{}
-
-%\setlrmarginsandblock{0.5in}{0.3125in}{*}
+\setlrmarginsandblock{0.4375in}{0.3125in}{*}
 \checkandfixthelayout 
+
 
 \input{leb/content/NT/matthew.tex}\flushcolsend
 \input{leb/content/NT/mark.tex}\flushcolsend
@@ -464,10 +481,6 @@
 \input{leb/content/NT/revelation.tex}\flushcolsend
 
 
-% a blank page on the back of the page - next page on a new right-sided page
-\clearpage
-\newpage
-
 
 \addcontentsline{toc}{part}{\headings{Extra Content}}
 
@@ -480,6 +493,8 @@
 
 \clearpage
 \newpage
+\thispagestyle{empty}
+\mbox{}
 
 % let's also include a few of the maps from the NWT. It is nice to look at maps sometimes, when considering the geography relating to events.
 \addcontentsline{toc}{chapter}{\headings{Diagrams and Maps}}
@@ -493,18 +508,13 @@
 
 
 
-
+% an empty page at the back
 \begin{titlingpage}
 
-\begin{centering}
-\begin{headings}
-\Huge\bfseries-- \ul{Notes} --
-\end{headings}
-
-
-\end{centering}
 \clearpage
 \newpage
+\thispagestyle{empty}
+\mbox{}
 
 \end{titlingpage}
 

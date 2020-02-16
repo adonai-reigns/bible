@@ -62,7 +62,7 @@ class Bible_Word extends Bible_Base
     
     public static function plaintTextToLatex($text){
 	// remove notes  // @TODO: move notes into the footer
-	$plainText = preg_replace('/(:\|N\|.*\|N\|:)/U', '', $text);
+	$plainText = $text;
 
 	// "Important notes", "idiom" and "supplied" markups
 	
@@ -70,16 +70,20 @@ class Bible_Word extends Bible_Base
 	    '|IN|:',
 	    '|S|:',
 	    '|I|:',
+	    ':|N|',
 	    ':|IN|',
 	    ':|S|', 
-	    ':|I|'  
+	    ':|I|',
+	    '|N|:'
 	), array(
 	    '}',
 	    '',
 	    '}',
-	    '\textit{', // @TODO: better choice of markup for important notes
+	    '\lebnote{',
+	    '\lebnote{', // @TODO: better choice of markup for important notes
 	    '', // @TODO: better choice of markup for supplied contexts
-	    '\textit{' // @TODO: better choice of markup for idioms
+	    '\textit{', // @TODO: better choice of markup for idioms
+	    '}'
 	), $plainText);
 	
 	

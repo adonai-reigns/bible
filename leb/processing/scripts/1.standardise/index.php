@@ -123,6 +123,17 @@ $sourceXML = preg_replace('/<li[0-9]>|<\/li[0-9]>/', '', $sourceXML);
 
 // replace note markers with non-xml markups
 $sourceXML = str_replace('<note tag="NOT_FOR_PRINT">', ':|N|:|NP|:', $sourceXML);
+$sourceXML = str_replace('<note>A quotation from ', ':|N|:|NP|:A quotation from ', $sourceXML);
+$sourceXML = str_replace('<note>This verse contains a quotation from ', ':|N|:|NP|:This verse contains a quotation from ', $sourceXML);
+$sourceXML = str_replace('<note>This verse contains quotations from ', ':|N|:|NP|:This verse contains quotations from ', $sourceXML);
+$sourceXML = str_replace('<note>The second half of this verse contains a quotation from ', ':|N|:|NP|:The second half of this verse contains a quotation from ', $sourceXML);
+$sourceXML = str_replace('<note>Verses <cite title="BibleLEB2:Mt 12:18–21">18–21</cite> are a quotation from ', ':|N|:|NP|:Verses 18–21 are a quotation from ', $sourceXML);
+$sourceXML = str_replace('<note>Verses <cite title="BibleLEB2:Ac 7:6–7">6–7</cite> are a quotation from ', ':|N|:|NP|:Verses 6–7 are a quotation from ', $sourceXML);
+$sourceXML = str_replace('<note>Verses <cite title="BibleLEB2:Ro 3:15–17">15–17</cite> are a quotation from ', ':|N|:|NP|:Verses 15–17 are a quotation from ', $sourceXML);
+$sourceXML = str_replace('<note>Verses <cite title="BibleLEB2:Ro 3:10–12">10–12</cite> are a quotation from ', ':|N|:|NP|:Verses 10–12 are a quotation from ', $sourceXML);
+
+
+
 $sourceXML = str_replace('<note>', ':|N|', $sourceXML);
 $sourceXML = str_replace('</note>', '|N|:', $sourceXML);
 
