@@ -118,7 +118,7 @@
 
 \iffalse
 \newlength{\versespacing}
-\setlength{\versespacing}{1.16667em plus .08333em}
+\setlength{\versespacing}{0pt}
 \newcommand{\versespace}{\hspace{\versespacing}}
 \frenchspacing
 \fi
@@ -143,6 +143,7 @@
 
 \makeatletter
 \newcommand\versenumcolor{red}
+\newcommand\footnotemarkercolor{darkgray}
 \newcommand\chapnumcolor{red}
 \newlength{\biblechapskip}
   \setlength{\biblechapskip}{0em plus .33em minus .2em}
@@ -169,11 +170,14 @@
 \newcommand{\lebnote}[1]{%
   %\footnote{\label{bibleverse}#1}
   \in@{:|NP|:}{#1}% ignore notes with a setting of "no print"
-  \ifin@{}\else{%
-    \footnote{#1}%
+  \ifin@{}\else{\footnote{#1}%
   }
   \fi
 }
+
+% 20200217 - https://tex.stackexchange.com/questions/26693/change-the-color-of-footnote-marker-in-latex
+\renewcommand\@makefnmark{\mbox{\@textsuperscript{\normalfont\color{\footnotemarkercolor}\@thefnmark}}\hspace{-2pt}}
+
 
 \newcount\biblechap@svdopt
 \newenvironment{biblechapter}[1][\thebiblechapter]
@@ -185,14 +189,14 @@
   \setbeforesecskip{0}\setbeforesubsecskip{0}
   \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,lraise=0.4]{\lettrinefont\fontsize{30}{10}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
   {\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
-\newcommand{\@verse}{\fontsize{10.65pt}{10.65pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}}
-\newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{\color{\versenumcolor}{\thebibleverse}~}\fi\ignorespaces}
+\newcommand{\@verse}{\fontsize{10.65pt}{10.65pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}\hspace{0pt}}
+\newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{~\color{\versenumcolor}{\thebibleverse\hspace{1.5pt}}}\fi\ignorespaces}
 \renewcommand{\verse}{\@verse\@showversenum}
 \newcommand{\verseWithHeading}[1]{%
   \@verse%
   \ifnum\c@bibleverse=1{\sectionstyle#1\newline}\else\vspace{5.2}\newline{\sectionstyle#1}\newline\fi\@showversenum}
 \newcommand{\verseWithSubheading}[1]{%
-  \@verse
+  \@verse%
   \ifnum\c@bibleverse=1{\subsectionstyle#1\newline}\else\vspace{5.2}\newline{\subsectionstyle#1}\newline\fi\@showversenum}
 \makeatother
 

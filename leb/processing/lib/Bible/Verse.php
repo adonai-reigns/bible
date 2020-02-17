@@ -74,9 +74,9 @@ class Bible_Book_Chapter_Verse extends Bible_Base
 	    case Bible::RENDER_FORMAT_LATEX:
 		ob_start();
 		if($this->headingPlainText !== null){
-		    echo '\verseWithHeading{'.Bible_Word::plaintTextToLatex($this->headingPlainText).'} '.Bible_Word::plaintTextToLatex($this->plainText);
+		    echo '\verseWithHeading{'.Bible_Word::plaintTextToLatex($this->headingPlainText).'}{'.Bible_Word::plaintTextToLatex($this->plainText).'}%';
 		}else{
-		    echo '\verse '.Bible_Word::plaintTextToLatex($this->plainText);
+		    echo '\verse{'.Bible_Word::plaintTextToLatex($this->plainText).'}%';
 		}
 		$renderedText = ob_get_contents();
 		ob_end_clean();

@@ -183,7 +183,8 @@ $sourceXML = str_replace('<b>', ':|b|', $sourceXML);
 $sourceXML = str_replace('</b>', '|b|:', $sourceXML);
 
 
-
+// suppress double-spaces where footnotes appear in the text
+$sourceXML = str_replace('|N|: ', '|N|:', $sourceXML);
 
 
 
