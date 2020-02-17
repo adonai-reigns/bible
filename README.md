@@ -1,48 +1,39 @@
-The King James Bible
+The Lexham English Bible
 ====================
 
-![In the beginning God created the heaven and the earth](preview.png?raw=true)
+![In the beginning God created the heavens and the earth](preview.png?raw=true)
 
-I am using LaTeX to typeset the King James Bible.
+I am using LaTeX to typeset the Lexham English Bible.
 
-You can see the latest version here: https://misc.barrucadu.co.uk/artefacts/bible/master.pdf
+This project has been forked from an existing project where the King James Version of the Holy Bible was being typeset.
 
+The book has been prepared for print at www.snowfallpress.com as a 6 inch by 9 inch perfect-bound paperback, with 40lb thin paperstock. The resulting file produces 1008 pages and a spine being 1.58 inches thick.
+
+The text for this translation has been converted to LaTeX format from XML source code freely available at http://www.logos.com.
+
+The proprietary fonts used in the original fork have been replaced by free Open-Source fonts.
 
 Building
 --------
 
-You will need XeLaTeX and the (non-free) [Equity][] font to compile
-this.  If you don't have Equity, you could substitute in another font
-but it won't look the same as my version (obviously).
+You will need XeLaTeX to compile this. 
 
 ```bash
-$ latexmk -xelatex main.tex
+$ latexmk -xelatex main-leb.tex
 ```
-
-The font declarations in `main.tex` assume the Equity files are in
-`~/s/fonts/equity`.
-
-[Equity]: https://typographyforlawyers.com/equity.html
 
 Q & A
 -----
 
 **Why are you doing this?**
 
-I realised that I'd used LaTeX a lot (eg, for my Ph.D thesis), but I'd
-never really tried making something with the primary purpose being to
-look good.
+I have been looking for a reliable translation of the Holy Bible as my knowledge of the original message grows to show errors in the mainstream translations. At a quick review of the Lexham English Translation, I decided it is worth investigating the text more thoroughly. I intend to carry this version as my daily bible and mark notes to indicate any changes that I find should be necessary.
 
-So this project is an opportunity for me to learn how to do that sort
-of thing.
 
-**Why the Bible?  Are you religious?**
+**Why the *Lexham English* Bible?**
 
-No.  It was this or poetry, and I couldn't pick a poem.
+1. It has a license that is designed to support and sustain the freedom to use the translation, and to protect it from competing interests. Other translations have precisely the opposite spirit.
 
-**Why the *King James* Bible?**
+2. Upon initial checks, it seems to belong to a very rare and precious set of translations that have escaped the corrupting influences of certain doctrinal heresies that have inspired wild distortions to the message of the texts in the majority of other translations.
 
-1. It's in the public domain, which more recent translations might not
-   be.
-
-2. I feel like fancy typesetting and fancy language go well together.
+3. The LEB bible is presently not accessible in a printed format, and the license terms specifically have discouraged any commercial interests from producing it. This project makes the translation more accessible for readers who might like to print their own copy but would be unable to convert the XML to a print-ready PDF file.
