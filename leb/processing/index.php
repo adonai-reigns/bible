@@ -1,7 +1,7 @@
 <?php
 
 // disabled by default
-//exit('Disabled for safety on line '.__LINE__.' of '.__FILE__);
+exit('Disabled for safety on line '.__LINE__.' of '.__FILE__);
 
 
 define('BIBLE_IMPORT_SCRIPT_EXEC', 1);
