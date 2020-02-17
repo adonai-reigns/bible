@@ -67,9 +67,13 @@ class Bible_Word extends Bible_Base
 	// "Important notes", "idiom" and "supplied" markups
 	
 	$plainText = str_replace(array(
+	    '|b|:',
+	    '|i|:', 
 	    '|IN|:',
 	    '|S|:',
 	    '|I|:',
+	    ':|b|', 
+	    ':|i|',
 	    ':|N|',
 	    ':|IN|',
 	    ':|S|', 
@@ -77,8 +81,12 @@ class Bible_Word extends Bible_Base
 	    '|N|:'
 	), array(
 	    '}',
+	    '}',
+	    '}',
 	    '',
 	    '}',
+	    '\textbf{',
+	    '\textit{',
 	    '\lebnote{',
 	    '\lebnote{', // @TODO: better choice of markup for important notes
 	    '', // @TODO: better choice of markup for supplied contexts
@@ -87,19 +95,7 @@ class Bible_Word extends Bible_Base
 	), $plainText);
 	
 	
-	// italics and bold markups
-	$plainText = str_replace(array(
-	    '|b|:',
-	    '|i|:', 
-	    ':|b|', 
-	    ':|i|'
-	), array(
-	    '}',
-	    '}',
-	    '\textbf{',
-	    '\textit{'
-	), $plainText);
-	
+
 	// remove verse title token
 	$plainText = str_replace(':|VT|:', '', $plainText);
 	

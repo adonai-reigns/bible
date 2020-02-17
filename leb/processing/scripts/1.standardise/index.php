@@ -121,6 +121,25 @@ $sourceXML = str_replace('</ul>', '</p>', $sourceXML);
 $sourceXML = preg_replace('/<li[0-9]>|<\/li[0-9]>/', '', $sourceXML);
 
 
+
+
+// fix some nesting typos that are in the original source before we begin
+$sourceXML = str_replace(array(
+    '<i>mishpat,</i>',
+    '<i>tsedaqah,</i>',
+    '<i>tsa`aqah,</i>',
+    '<i>ned,</i>',
+    '<i>Qere)</i>'
+), array(
+    '<i>mishpat</i>,',
+    '<i>tsedaqah</i>,',
+    '<i>tsa`aqah</i>,',
+    '<i>ned</i>,',
+    '<i>Qere</i>)'
+), $sourceXML, $reps);
+
+
+
 // replace note markers with non-xml markups
 $sourceXML = str_replace('<note tag="NOT_FOR_PRINT">', ':|N|:|NP|:', $sourceXML);
 $sourceXML = str_replace('<note>A quotation from ', ':|N|:|NP|:A quotation from ', $sourceXML);
@@ -163,21 +182,6 @@ $sourceXML = str_replace('</i>', '|i|:', $sourceXML);
 $sourceXML = str_replace('<b>', ':|b|', $sourceXML);
 $sourceXML = str_replace('</b>', '|b|:', $sourceXML);
 
-
-// fix some nesting typos that are in the original source before we begin
-$sourceXML = str_replace(array(
-    '<i>mishpat,</i>',
-    '<i>tsedaqah,</i>',
-    '<i>tsa`aqah,</i>',
-    '<i>ned,</i>',
-    '<i>Qere)</i>'
-), array(
-    '<i>mishpat</i>,',
-    '<i>tsedaqah</i>,',
-    '<i>tsa`aqah</i>,',
-    '<i>ned</i>,',
-    '<i>Qere</i>)'
-), $sourceXML);
 
 
 
