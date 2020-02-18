@@ -74,25 +74,39 @@ class Bible_Book_Chapter extends Bible_Base
 		break;
 	    case Bible::RENDER_FORMAT_LATEX:
 		ob_start();
+		$footnotes = array();
+		
 		echo '\begin{biblechapter} % '.$this->_book->displayName.' '.$this->number.PHP_EOL;
+		
 		if(!empty($this->plainChapterHeading)){
 		    $verses = $this->verses;
 		    
 		    // @TODO: really do not want to overwrite an existing heading, if it exists on the verse...
 		    $verses[0]->setHeading($this->plainChapterHeading, $this->richChapterHeading);
 		    foreach($verses as $verse){
-			echo $verse->render($format).PHP_EOL;
+			$results = $verse->render($format);
+			$footnotes = array_merge($footnotes, $results['footnotes']);
+			echo $results['text'].PHP_EOL;
 		    }
 		    
 		}else{
 		    foreach($this->verses as $verse){
-			echo $verse->render($format).PHP_EOL;
+			$results = $verse->render($format);
+			$footnotes = array_merge($footnotes, $results['footnotes']);
+			echo $results['text'].PHP_EOL;
 		    }
 		}
+		
 		echo '\end{biblechapter}'.PHP_EOL.PHP_EOL;
+		
 		$renderedText = ob_get_contents();
 		ob_end_clean();
-		return $renderedText;
+		
+		return array(
+		    'footnotes' => $footnotes,
+		    'text' => $renderedText
+		);
+		
 		break;
 	    case Bible::RENDER_FORMAT_HTML:
 		

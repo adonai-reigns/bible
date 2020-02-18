@@ -36,7 +36,8 @@
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{scrextend}
-\usepackage[stable,para,hang,perpage]{footmisc}
+\usepackage[para,perpage]{footmisc}
+\usepackage{fixfoot}
 
 \setmainfont{frankrhuel}[
   % Files
@@ -131,15 +132,15 @@
  \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
  }}%
 
-\newcommand{\sectionstyle}{\bfseries\raggedright\fontsize{11.5}{9}\selectfont\headings}
+\newcommand{\sectionstyle}{\bfseries\raggedright\fontsize{11.5}{9pt}\selectfont\headings}
 \setsecheadstyle{\sectionstyle}
-\setbeforesecskip{0ex}
-\setaftersecskip{0}
+\setbeforesecskip{0pt}
+\setaftersecskip{0pt}
 
-\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\fontsize{10}{9}\selectfont\headings}
+\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\fontsize{10pt}{9pt}\selectfont\headings}
 \setsubsecheadstyle{\subsectionstyle}
-\setbeforesubsecskip{0ex}
-\setaftersubsecskip{0}
+\setbeforesubsecskip{0pt}
+\setaftersubsecskip{0pt}
 
 \makeatletter
 \newcommand\versenumcolor{red}
@@ -176,8 +177,11 @@
 }
 
 % 20200217 - https://tex.stackexchange.com/questions/26693/change-the-color-of-footnote-marker-in-latex
-\renewcommand\@makefnmark{\mbox{\@textsuperscript{\normalfont\color{\footnotemarkercolor}\@thefnmark}}\hspace{-2pt}}
+\renewcommand\@makefnmark{\mbox{\@textsuperscript{\normalfont\color{\footnotemarkercolor}\@thefnmark}}\hspace{2pt}}
 
+\long\def\@makefntext#1{%
+  \noindent\hb@xt@ 6pt{\@makefnmark\hspace{-1.5pt}}#1%
+}
 
 \newcount\biblechap@svdopt
 \newenvironment{biblechapter}[1][\thebiblechapter]
@@ -200,9 +204,6 @@
   \ifnum\c@bibleverse=1{\subsectionstyle#1\newline}\else\vspace{5.2}\newline{\subsectionstyle#1}\newline\fi\@showversenum}
 \makeatother
 
-\newcommand{\lebnote}[2][]{% add lower corner brackets to the word, that are references to footnotes. The second argument is the sequence identifier of the footnote (or omitted)
-  \@#2% @TODO - footnotes
-}
 
 %\newcommand{\startornaments}{\AddToShipoutPictureBG{%
 %  \checkoddpage%
@@ -248,7 +249,7 @@
 
 \chapterstyle{dash-embiggened}
 
-\newcommand{\columnbreak}{\pagebreak}
+
 
 \newcommand{\LORD}{\textsc{\headings{Lord}}\xspace}
 \newcommand{\LORDs}{\textsc{\headings{Lord's}}\xspace}
@@ -368,13 +369,13 @@
 \setlrmarginsandblock{0.4375in}{0.3125in}{*}
 
 % the book name, chapter and verse number at the top of the page
-\setcolsepandrule{0.25in}{0pt}
+\setcolsepandrule{0.125in}{0pt}
 \fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
 \fancyhfoffset[RO]{1pt}
 
 \setlength\textwidth{5.25in}
-\setlength\columnwidth{2.5in}
-\setlength\columnsep{0.25in}
+\setlength\columnwidth{2.5625in}
+\setlength\columnsep{0.125in}
 \checkandfixthelayout 
 
 
@@ -394,10 +395,12 @@
 \newpage
 
 
+% Declare our footnote values for use with the fixfoot package
+\input{leb/content/footnotes.tex}
+
+
 \input{leb/content/OT/genesis.tex}\flushcolsend
 \input{leb/content/OT/exodus.tex}\flushcolsend
-
-
 \input{leb/content/OT/leviticus.tex}\flushcolsend
 \input{leb/content/OT/numbers.tex}\flushcolsend
 \input{leb/content/OT/deuteronomy.tex}\flushcolsend
@@ -423,22 +426,26 @@
 \input{leb/content/OT/lamentations.tex}\flushcolsend
 \input{leb/content/OT/ezekiel.tex}\flushcolsend
 \input{leb/content/OT/daniel.tex}\flushcolsend
-\input{leb/content/OT/hosea.tex}
-\input{leb/content/OT/joel.tex}
-\input{leb/content/OT/amos.tex}
-\input{leb/content/OT/obadiah.tex}
-\input{leb/content/OT/jonah.tex}
-\input{leb/content/OT/micah.tex}
-\input{leb/content/OT/nahum.tex}
-\input{leb/content/OT/habakkuk.tex}
-\input{leb/content/OT/zephaniah.tex}
-\input{leb/content/OT/haggai.tex}
-\input{leb/content/OT/zechariah.tex}
+\input{leb/content/OT/hosea.tex}\flushcolsend
+\input{leb/content/OT/joel.tex}\flushcolsend
+\input{leb/content/OT/amos.tex}\flushcolsend
+\input{leb/content/OT/obadiah.tex}\flushcolsend
+\input{leb/content/OT/jonah.tex}\flushcolsend
+\input{leb/content/OT/micah.tex}\flushcolsend
+\input{leb/content/OT/nahum.tex}\flushcolsend
+\input{leb/content/OT/habakkuk.tex}\flushcolsend
+\input{leb/content/OT/zephaniah.tex}\flushcolsend
+\input{leb/content/OT/haggai.tex}\flushcolsend
+\input{leb/content/OT/zechariah.tex}\flushcolsend
 \input{leb/content/OT/malachi.tex}\flushcolsend
-\clearpage
 
 
-\setlrmarginsandblock{0in}{0.75in}{*}
+% a blank page on the back of the page - next page on a new right-sided page
+\cleardoublepage
+
+
+
+\setlrmarginsandblock{0.4375in}{0.3125in}{*}
 \checkandfixthelayout 
 
 \part*{\headings{The New Testament}}

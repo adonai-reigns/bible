@@ -1,7 +1,9 @@
 <?php
 
 // disabled by default
-exit('Disabled for safety on line '.__LINE__.' of '.__FILE__);
+//exit('Disabled for safety on line '.__LINE__.' of '.__FILE__);
+
+set_time_limit(60*10);
 
 
 define('BIBLE_IMPORT_SCRIPT_EXEC', 1);
@@ -47,6 +49,13 @@ function reset_script($cmdHandle=null){
 
 
 $scriptsConfig = array(
+    [
+	'title' => 'Generate Footnote ID\'s',
+	'handle' => '1.indexnotes',
+	'status' => 0,
+	'description' => 'Some of the footnotes are repeated a lot. It is best if we can consolidate every reference to a footnote into a single footnote, per page. '
+	. 'To do this, we need to assign a unique id for each footnote pattern, and every repeated occurence of that footnote pattern shall use the id as the handle.'
+    ],
     [
 	'title' => 'Standardise XML',
 	'handle' => '1.standardise',

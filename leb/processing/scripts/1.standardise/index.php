@@ -5,10 +5,11 @@
 defined('BIBLE_IMPORT_SCRIPT_EXEC') or die();
 
 define('BIBLE_IMPORT_SCRIPT_EXEC_DIR', realpath(__DIR__));
-define('BIBLE_IMPORT_SCRIPT_SOURCE_DIR', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'sources'.DIRECTORY_SEPARATOR.'0.raw'));
+define('BIBLE_IMPORT_SCRIPT_SOURCE_DIR', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'sources'.DIRECTORY_SEPARATOR.'1.indexnotes'));
 define('BIBLE_IMPORT_SCRIPT_DEST_DIR', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'sources'.DIRECTORY_SEPARATOR.'1.standardise'));
 define('BIBLE_IMPORT_SCRIPT_OT_TEX_DIR',  realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.'OT'));
 define('BIBLE_IMPORT_SCRIPT_NT_TEX_DIR',  realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.'NT'));
+define('BIBLE_IMPORT_SCRIPT_FN_TEX_DIR',  realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'content'));
 
 
 // we need to map the shorthand booknames that are used in the XML, to correspond to our system book names
@@ -218,6 +219,11 @@ $docBooks = $doc->getElementsByTagName('book');
 
 $numBooks = 0;
 
+
+
+$latexFootnotes = array();
+
+
 foreach($docBooks as $docBook){
     $bookId = $docBook->getAttribute('id');
     
@@ -406,16 +412,18 @@ foreach($docBooks as $docBook){
 	    
 	}// looping paragraphs
 	
-    
     }// looping chapters
     
+    $latexBookResults = $dbBook->render(Bible::RENDER_FORMAT_LATEX);
+    
+    $latexFootnotes = array_merge($latexFootnotes, $latexBookResults['footnotes']);
     
     switch($OTNT){
 	case Bible::NEW_TESTAMENT:
-	    file_put_contents(BIBLE_IMPORT_SCRIPT_NT_TEX_DIR.DIRECTORY_SEPARATOR.$bookSystemName.'.tex', $dbBook->render(Bible::RENDER_FORMAT_LATEX));
+	    file_put_contents(BIBLE_IMPORT_SCRIPT_NT_TEX_DIR.DIRECTORY_SEPARATOR.$bookSystemName.'.tex', $latexBookResults['text']);
 	    break;
 	case Bible::OLD_TESTAMENT:
-	    file_put_contents(BIBLE_IMPORT_SCRIPT_OT_TEX_DIR.DIRECTORY_SEPARATOR.$bookSystemName.'.tex', $dbBook->render(Bible::RENDER_FORMAT_LATEX));
+	    file_put_contents(BIBLE_IMPORT_SCRIPT_OT_TEX_DIR.DIRECTORY_SEPARATOR.$bookSystemName.'.tex', $latexBookResults['text']);
 	    break;
     }
 
@@ -426,6 +434,13 @@ foreach($docBooks as $docBook){
     
     
 }// looping books
+
+
+$footnoteFile = '';
+foreach($latexFootnotes as $footnoteKey=>$footnoteValue){
+    $footnoteFile .= '\DeclareFixedFootnote{\\'.$footnoteKey.'}{'.$footnoteValue.'}%'.PHP_EOL;
+}
+file_put_contents(BIBLE_IMPORT_SCRIPT_FN_TEX_DIR.DIRECTORY_SEPARATOR.'footnotes.tex', $footnoteFile);
 
 
 

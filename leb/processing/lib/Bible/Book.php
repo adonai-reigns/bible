@@ -52,13 +52,25 @@ class Bible_Book extends Bible_Base
 		break;
 	    case Bible::RENDER_FORMAT_LATEX:
 		ob_start();
-		echo '\biblebook{'.Bible_Word::plaintTextToLatex($this->displayName).'}'.PHP_EOL.PHP_EOL;
+		$footnotes = array();
+		
+		$latexBookName = Bible_Word::plainTextToLatex($this->displayName);
+		
+		echo '\biblebook{'.$latexBookName['text'].'}'.PHP_EOL.PHP_EOL;
+		
 		foreach($this->chapters as $chapter){
-		    echo $chapter->render($format);
+		    $results = $chapter->render($format);
+		    $footnotes = array_merge($footnotes, $results['footnotes']);
+		    echo $results['text'];
 		}
+		
 		$renderedText = ob_get_contents();
 		ob_end_clean();
-		return $renderedText;
+		return array(
+		    'footnotes' => $footnotes,
+		    'text' => $renderedText
+		);
+		
 		break;
 	    case Bible::RENDER_FORMAT_HTML:
 		

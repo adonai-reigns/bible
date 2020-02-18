@@ -73,14 +73,28 @@ class Bible_Book_Chapter_Verse extends Bible_Base
 		break;
 	    case Bible::RENDER_FORMAT_LATEX:
 		ob_start();
+		
+		$footnotes = array();
+		$results = Bible_Word::plainTextToLatex($this->plainText);
+		
+		$footnotes = array_merge($footnotes, $results['footnotes']);
+		
 		if($this->headingPlainText !== null){
-		    echo '\verseWithHeading{'.Bible_Word::plaintTextToLatex($this->headingPlainText).'}{'.Bible_Word::plaintTextToLatex($this->plainText).'}%';
+		    $latexHeadingResult = Bible_Word::plainTextToLatex($this->headingPlainText);
+		    
+		    echo '\verseWithHeading{'.$latexHeadingResult['text'].'}{'.$results['text'].'}%';
 		}else{
-		    echo '\verse{'.Bible_Word::plaintTextToLatex($this->plainText).'}%';
+		    echo '\verse{'.$results['text'].'}%';
 		}
+		
 		$renderedText = ob_get_contents();
 		ob_end_clean();
-		return $renderedText;
+		
+		return array(
+		    'footnotes' => $footnotes,
+		    'text' => $renderedText
+		);
+		
 		break;
 	    case Bible::RENDER_FORMAT_HTML:
 		

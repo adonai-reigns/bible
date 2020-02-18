@@ -60,13 +60,46 @@ class Bible_Word extends Bible_Base
     }
     
     
-    public static function plaintTextToLatex($text){
+    public static function plainTextToLatex($text){
 	// remove notes  // @TODO: move notes into the footer
 	$plainText = $text;
 
-	// "Important notes", "idiom" and "supplied" markups
+	$footnotes = array();
 	
-	$plainText = str_replace(array(
+	$notes = array();
+	preg_match_all('/:\|N\|(.*)\|N\|:/U', $plainText, $notes);
+	
+	foreach($notes[0] as $noteKey=>$noteValue){
+	    
+	    if(substr($notes[1][$noteKey], 0, 6) === ':|NP|:'){
+		// we don't print these notes
+		
+		$plainText = str_replace($noteValue, '', $plainText);
+		
+	    }elseif(strpos($notes[1][$noteKey], ':||ln') !== false){
+		// using fixfoot LaTeX package to consolidate repetitive footnotes
+		// extract the unique id for the handle
+		$noteParts = explode('||:', $notes[1][$noteKey]);
+		$noteParts[0] = substr($noteParts[0], 3);
+		$noteParts[1] = str_replace('||:', '', $noteParts[1]);
+
+		// adds a unique tag name for use with the LaTeX package "fixfoot"
+		$plainText = str_replace($noteValue, '\\'.$noteParts[0].'{}', $plainText);
+		
+		// we pass the footnote content to the calling function, so the caller can consolidate all footnotes
+		$footnotes[$noteParts[0]] = $noteParts[1];
+
+	    }else{
+		// normal footnote
+		$plainText = str_replace($noteValue, '\lebnote{'.$notes[1][$noteKey].'}', $plainText);
+		
+	    }
+	}
+	
+
+	// "Important notes", "idiom" and "supplied" markups
+	$tagSearches = array(
+	    ':|I|:|S|',
 	    '|b|:',
 	    '|i|:', 
 	    '|IN|:',
@@ -74,12 +107,14 @@ class Bible_Word extends Bible_Base
 	    '|I|:',
 	    ':|b|', 
 	    ':|i|',
-	    ':|N|',
 	    ':|IN|',
-	    ':|S|', 
-	    ':|I|',
-	    '|N|:'
-	), array(
+	    ':|S|',
+	    ':|I|', 
+	    ':|VT|:'
+	);
+	
+	$tagReplacements = array(
+	    '\textit{',
 	    '}',
 	    '}',
 	    '}',
@@ -87,19 +122,22 @@ class Bible_Word extends Bible_Base
 	    '}',
 	    '\textbf{',
 	    '\textit{',
-	    '\lebnote{',
-	    '\lebnote{', // @TODO: better choice of markup for important notes
+	    '\textit{', // @TODO: better choice of markup for important notes
 	    '', // @TODO: better choice of markup for supplied contexts
 	    '\textit{', // @TODO: better choice of markup for idioms
-	    '}'
-	), $plainText);
+	    ''
+	);
 	
+	$plainText = str_replace($tagSearches, $tagReplacements, $plainText);
 	
-
-	// remove verse title token
-	$plainText = str_replace(':|VT|:', '', $plainText);
+	foreach($footnotes as $footnoteKey=>$footnoteValue){
+	    $footnotes[$footnoteKey] = str_replace($tagSearches, $tagReplacements, $footnoteValue);
+	}
 	
-	return $plainText;
+	return array(
+	    'footnotes' => $footnotes,
+	    'text' => $plainText
+	);
     }
     
     public function __sleep(){
