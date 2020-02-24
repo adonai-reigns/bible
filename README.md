@@ -34,7 +34,7 @@ I have been looking for a reliable translation of the Holy Bible as my knowledge
 
 **Why the *Lexham English* Bible?**
 
-1. It has a [license](https://lexhamenglishbible.com/license/) that is designed to support and sustain the freedom to use the translation, and to protect it from competing interests. Other translations have precisely the opposite spirit.
+1. It has a [license](https://lexhamenglishbible.com/license/) that is designed to support and sustain the freedom to use the translation, and to protect it from competing interests. Other translations do precisely the opposite.
 
 2. Upon initial checks, it seems to belong to a very rare and precious set of translations that have escaped the corrupting influences of certain doctrinal heresies, that tend to inspire wild distortions to the message.
 
