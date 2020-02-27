@@ -9,6 +9,8 @@ define('BIBLE_IMPORT_SCRIPT_SOURCE_DIR', realpath(__DIR__.DIRECTORY_SEPARATOR.'.
 define('BIBLE_IMPORT_SCRIPT_DEST_DIR', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'sources'.DIRECTORY_SEPARATOR.'1.standardise'));
 define('BIBLE_IMPORT_SCRIPT_OT_TEX_DIR',  realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.'OT'));
 define('BIBLE_IMPORT_SCRIPT_NT_TEX_DIR',  realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.'NT'));
+define('BIBLE_IMPORT_SCRIPT_OT_SQL_DIR',  realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'sql'.DIRECTORY_SEPARATOR.'OT'));
+define('BIBLE_IMPORT_SCRIPT_NT_SQL_DIR',  realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'sql'.DIRECTORY_SEPARATOR.'NT'));
 define('BIBLE_IMPORT_SCRIPT_FN_TEX_DIR',  realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'content'));
 
 
@@ -415,15 +417,19 @@ foreach($docBooks as $docBook){
     }// looping chapters
     
     $latexBookResults = $dbBook->render(Bible::RENDER_FORMAT_LATEX);
+    $sqlBookResults = $dbBook->render(Bible::RENDER_FORMAT_SQL);
+    
     
     $latexFootnotes = array_merge($latexFootnotes, $latexBookResults['footnotes']);
     
     switch($OTNT){
 	case Bible::NEW_TESTAMENT:
 	    file_put_contents(BIBLE_IMPORT_SCRIPT_NT_TEX_DIR.DIRECTORY_SEPARATOR.$bookSystemName.'.tex', $latexBookResults['text']);
+	    file_put_contents(BIBLE_IMPORT_SCRIPT_NT_SQL_DIR.DIRECTORY_SEPARATOR.$bookSystemName.'.sql', $sqlBookResults);
 	    break;
 	case Bible::OLD_TESTAMENT:
 	    file_put_contents(BIBLE_IMPORT_SCRIPT_OT_TEX_DIR.DIRECTORY_SEPARATOR.$bookSystemName.'.tex', $latexBookResults['text']);
+	    file_put_contents(BIBLE_IMPORT_SCRIPT_OT_SQL_DIR.DIRECTORY_SEPARATOR.$bookSystemName.'.sql', $sqlBookResults);
 	    break;
     }
 

@@ -60,6 +60,59 @@ class Bible_Word extends Bible_Base
     }
     
     
+    
+    
+    public static function plainTextToHTML($text){
+	
+	// strip note ids that have been used for latex
+	$text = preg_replace('/:\|\|ln[A-Z]{3,3}\|\|:/U', '', $text);
+	
+	// strip notes that are not for print
+	$text = preg_replace('/:\|N\|:\|NP\|:.*\|N\|:/U', '', $text);
+
+	// "Important notes", "idiom" and "supplied" markups
+	$tagSearches = array(
+	    ':|I|:|S|',
+	    '|b|:',
+	    '|i|:', 
+	    '|IN|:',
+	    '|S|:',
+	    '|I|:',
+	    '|N|:',
+	    ':|b|', 
+	    ':|i|',
+	    ':|IN|',
+	    ':|S|',
+	    ':|I|', 
+	    ':|N|',
+	    ':|VT|:',
+	    "\r",
+	    "\n"
+	);
+	
+	$tagReplacements = array(
+	    '<span class="italic"><span class="supplied">',
+	    '</span>',
+	    '</span>',
+	    '</span>',
+	    '</span>',
+	    '</span>',
+	    '</span>',
+	    '<span class="bold">',
+	    '<span class="italic">',
+	    '<span class="note important">', 
+	    '<span class="supplied">',
+	    '<span class="idiom">', // @TODO: better choice of markup for idioms
+	    '<span class="note">',
+	    '',
+	    ' ',
+	    ' '
+	);
+	
+	return str_replace($tagSearches, $tagReplacements, $text);
+
+    }
+    
     public static function plainTextToLatex($text){
 	// remove notes  // @TODO: move notes into the footer
 	$plainText = $text;

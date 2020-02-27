@@ -21,6 +21,7 @@ class Bible extends Bible_Base
     const RENDER_FORMAT_PLAIN = 'plain';
     const RENDER_FORMAT_HTML = 'html';
     const RENDER_FORMAT_LATEX = 'latex';
+    const RENDER_FORMAT_SQL = 'sql';
     
     protected $settableProperties = array(
 	'title',

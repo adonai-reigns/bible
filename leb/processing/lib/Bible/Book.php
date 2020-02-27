@@ -50,6 +50,23 @@ class Bible_Book extends Bible_Base
 		ob_end_clean();
 		return $renderedText;
 		break;
+		
+	    case Bible::RENDER_FORMAT_SQL:
+		ob_start();
+		$footnotes = array();
+		
+		foreach($this->chapters as $chapter){
+		    echo 'INSERT INTO `bible_verses` (`version`, `book`, `chapter`, `verse`, `paragraph`, `content`) VALUES '.PHP_EOL;
+		    echo $chapter->render($format).PHP_EOL;
+		    echo ';'.PHP_EOL.PHP_EOL;
+		}
+		
+		$renderedText = ob_get_contents();
+		ob_end_clean();
+		return $renderedText;
+		
+		break;
+		
 	    case Bible::RENDER_FORMAT_LATEX:
 		ob_start();
 		$footnotes = array();

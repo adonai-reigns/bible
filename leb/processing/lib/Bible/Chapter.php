@@ -72,6 +72,29 @@ class Bible_Book_Chapter extends Bible_Base
 		ob_end_clean();
 		return $renderedText;
 		break;
+		
+	    case Bible::RENDER_FORMAT_SQL:
+		ob_start();
+		
+		if(!empty($this->plainChapterHeading)){
+		    $this->verses[0]->setHeading($this->plainChapterHeading, $this->richChapterHeading);
+		}
+		
+		$versesRendered = array();
+		
+		foreach($this->verses as $verse){
+		    $versesRendered[] = $verse->render($format);
+		}
+		
+		echo implode(','.PHP_EOL, $versesRendered);
+		
+		$renderedText = ob_get_contents();
+		ob_end_clean();
+		
+		return $renderedText;
+		
+		break;
+		
 	    case Bible::RENDER_FORMAT_LATEX:
 		ob_start();
 		$footnotes = array();

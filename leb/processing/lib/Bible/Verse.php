@@ -71,6 +71,30 @@ class Bible_Book_Chapter_Verse extends Bible_Base
 		ob_end_clean();
 		return $renderedText;
 		break;
+	    case Bible::RENDER_FORMAT_SQL:
+		ob_start();
+		
+		$footnotes = array();
+		
+		$htmlContent = Bible_Word::plainTextToHTML($this->plainText);
+		
+		if($this->headingPlainText !== null){
+		    $htmlContent = '<span class="verse-title">'.Bible_Word::plainTextToHTML($this->headingPlainText).'</span>'.$htmlContent;
+		}
+		
+		// @TODO: potentially an sql error could be caused here..
+		$htmlContent = addslashes($htmlContent);
+		
+		echo "('LEB', '{$this->_book->displayName}', '{$this->_chapter->number}', '{$this->number}', '{$this->paragraphId}', '{$htmlContent}')";
+		
+		$renderedText = ob_get_contents();
+		ob_end_clean();
+		
+		return  $renderedText;
+		
+		break;
+	    
+	    
 	    case Bible::RENDER_FORMAT_LATEX:
 		ob_start();
 		
