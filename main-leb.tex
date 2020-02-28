@@ -346,7 +346,8 @@
     \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}
 % If you want to turn off columns being forced to equal height, use the starred version \begin{multicols*}{2}.
 \begin{multicols}{2}
-
+\setlrmarginsandblock{0.8375in}{0.3125in}{*}
+\checkandfixthelayout 
   \@starttoc{toc}
 \end{multicols}
 \endgroup   % end of TeX group
@@ -368,15 +369,15 @@
 \mainmatter
 
 
-\setlrmarginsandblock{0.4375in}{0.3125in}{*}
+\setlrmarginsandblock{0.5625in}{0.3125in}{*}
 
 % the book name, chapter and verse number at the top of the page
 \setcolsepandrule{0.125in}{0pt}
 \fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
 \fancyhfoffset[RO]{1pt}
 
-\setlength\textwidth{5.25in}
-\setlength\columnwidth{2.5625in}
+\setlength\textwidth{5.125in}
+\setlength\columnwidth{2.5in}
 \setlength\columnsep{0.125in}
 \checkandfixthelayout 
 
@@ -447,7 +448,7 @@
 
 
 
-\setlrmarginsandblock{0.4375in}{0.3125in}{*}
+\setlrmarginsandblock{0.5625in}{0.3125in}{*}
 \checkandfixthelayout 
 
 \part*{\headings{The New Testament}}
@@ -460,7 +461,7 @@
 \mbox{}
 
 
-\setlrmarginsandblock{0.4375in}{0.3125in}{*}
+\setlrmarginsandblock{0.5625in}{0.3125in}{*}
 \checkandfixthelayout 
 
 
@@ -492,7 +493,6 @@
 \input{leb/content/NT/3john.tex}\flushcolsend
 \input{leb/content/NT/jude.tex}\flushcolsend
 \input{leb/content/NT/revelation.tex}\flushcolsend
-
 
 
 \addcontentsline{toc}{part}{\headings{Extra Content}}
