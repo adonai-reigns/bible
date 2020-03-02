@@ -21,13 +21,27 @@ define('BIBLE_IMPORT_SCRIPT_DEST_DIR', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'
 
 
 $sourceXML = file_get_contents(BIBLE_IMPORT_SCRIPT_SOURCE_DIR.DIRECTORY_SEPARATOR.'LEB.xml');
-$sourceLength = strlen($sourceXML);
+
+
+// shorten the notes length
+
+// remove all occurrences of "Literally" to shorten footnotes length
+$sourceXML = preg_replace('/>Literally, /', '>', $sourceXML);
+$sourceXML = preg_replace('/>Literally /', '>', $sourceXML);
+
+// ditto "A quotation from"
+$sourceXML = preg_replace('/>A quotation from /', '>', $sourceXML);
+
+// strip out all notes which say that the imperfect tense has been generated
+$sourceXML = preg_replace('/<note.*>The imperfect tense has been translated as.*<\/note>/U', '', $sourceXML);
+
+
 
 
 // make a unique index for each note
 $allNotes = array();
 
-
+$sourceLength = strlen($sourceXML);
 preg_match_all('/<note[^>]*>(.*)<\/note>/U', $sourceXML, $allNotes);
 
 
@@ -35,9 +49,6 @@ preg_match_all('/<note[^>]*>(.*)<\/note>/U', $sourceXML, $allNotes);
 // we will operate only on notes where the repeats are within a proximity that is a page's length 
 // (LaTeX fixfooter package has a heavy performance penalty)
 $fixedfootNotes = array(array(), array());
-
-// if two identical occurrences of a note is found within this number of characters, we catch it here
-$proximityLimit = 100; 
 
 $allNotesFrequencies = array_count_values($allNotes[0]);
 
@@ -57,6 +68,9 @@ exit;
  */
 
 
+// if two identical occurrences of a note is found within this number of characters, we catch it here
+$proximityLimit = 1900; 
+
 foreach($allNotes[0] as $allNotesKey=>$allNotesValue){
     $i++;
     if($allNotesFrequencies[$allNotesValue] < 2){
@@ -68,7 +82,7 @@ foreach($allNotes[0] as $allNotesKey=>$allNotesValue){
     $lastPos = 0;
     
     while (($thisPos = strpos($sourceXML, $allNotesValue, $lastPos))!== false) {
-	if($lastPos - $thisPos < $proximityLimit){
+	if($thisPos - $lastPos < $proximityLimit){
 	    $hasProximity = true;
 	}
 	$lastPos = $thisPos+1;

@@ -15,16 +15,16 @@ INSERT INTO `bible_verses` (`version`, `book`, `chapter`, `verse`, `paragraph`, 
 
 INSERT INTO `bible_verses` (`version`, `book`, `chapter`, `verse`, `paragraph`, `content`) VALUES 
 ('LEB', '2 Thessalonians', '2', '1', '1', '<span class=\"verse-title\">The Man of Lawlessness Will Be Revealed</span>Now we ask you, brothers, concerning the coming of our Lord Jesus Christ and our assembling to him,'),
-('LEB', '2 Thessalonians', '2', '2', '1', 'that you not be easily shaken from your composure, nor be troubled either by a spirit or by a message or by a letter <span class=\"idiom\">alleged to be from us</span><span class=\"note\">Literally “as <span class=\"supplied\">if</span> by us”</span>, to the effect that the day of the Lord has arrived.'),
+('LEB', '2 Thessalonians', '2', '2', '1', 'that you not be easily shaken from your composure, nor be troubled either by a spirit or by a message or by a letter <span class=\"idiom\">alleged to be from us</span><span class=\"note\">“as <span class=\"supplied\">if</span> by us”</span>, to the effect that the day of the Lord has arrived.'),
 ('LEB', '2 Thessalonians', '2', '3', '1', 'Do not let anyone deceive you in any way, for <span class=\"supplied\">that day will not come</span> unless the rebellion comes first, and the man of lawlessness is revealed, the son of destruction,'),
 ('LEB', '2 Thessalonians', '2', '4', '1', 'who opposes and who exalts himself over every so-called god or object of worship, so that he sits down in the temple of God, proclaiming that he himself is God.'),
 ('LEB', '2 Thessalonians', '2', '5', '2', 'Do you not remember that <span class=\"supplied\">while</span>we were still with you, we were saying these <span class=\"supplied\">things</span> to you?'),
 ('LEB', '2 Thessalonians', '2', '6', '2', 'And you know that which restrains <span class=\"supplied\">him</span> now, so that he will be revealed in his own time.'),
-('LEB', '2 Thessalonians', '2', '7', '2', 'For the mystery of lawlessness is at work already; only the one who now restrains<span class=\"note\">Or “restrains it” (referring to the “mystery of lawlessness”; or “restrains him” (referring to the “man of lawlessness” in v. 3)</span><span class=\"supplied\">will do so</span> until he is out of the way,<span class=\"note\">Literally “out of the midst”</span>'),
+('LEB', '2 Thessalonians', '2', '7', '2', 'For the mystery of lawlessness is at work already; only the one who now restrains<span class=\"note\">Or “restrains it” (referring to the “mystery of lawlessness”; or “restrains him” (referring to the “man of lawlessness” in v. 3)</span><span class=\"supplied\">will do so</span> until he is out of the way,<span class=\"note\">“out of the midst”</span>'),
 ('LEB', '2 Thessalonians', '2', '8', '2', 'and then the lawless one will be revealed, whom the Lord Jesus will slay with the breath of his mouth, and wipe out by the appearance of his coming,'),
 ('LEB', '2 Thessalonians', '2', '9', '2', 'whose coming is in accordance with the working of Satan, with all power and signs and lying wonders,'),
 ('LEB', '2 Thessalonians', '2', '10', '2', 'and with every unrighteous deception against those who are perishing, in place of which they did not accept the love of the truth, so that they would be saved.'),
-('LEB', '2 Thessalonians', '2', '11', '2', 'And because of this, God sends them <span class=\"idiom\">a powerful delusion</span><span class=\"note\">Literally “a working of deceit”</span>so that they will believe the lie,'),
+('LEB', '2 Thessalonians', '2', '11', '2', 'And because of this, God sends them <span class=\"idiom\">a powerful delusion</span><span class=\"note\">“a working of deceit”</span>so that they will believe the lie,'),
 ('LEB', '2 Thessalonians', '2', '12', '2', 'in order that all may be condemned who did not believe the truth, but delighted in unrighteousness.'),
 ('LEB', '2 Thessalonians', '2', '13', '4', '<span class=\"verse-title\">Stand Firm and Hold Fast</span>But we ought to give thanks to God always concerning you, brothers <span class=\"supplied\">dearly</span> loved by the Lord, because God has chosen you <span class=\"supplied\">as</span> first fruits for salvation by the sanctification of the Spirit and faith in the truth,'),
 ('LEB', '2 Thessalonians', '2', '14', '4', 'for which <span class=\"supplied\">purpose</span> he called<span class=\"note\">Some manuscripts have “he also called”</span>you through our gospel for the obtaining of the glory of our Lord Jesus Christ.'),
@@ -35,7 +35,7 @@ INSERT INTO `bible_verses` (`version`, `book`, `chapter`, `verse`, `paragraph`, 
 
 INSERT INTO `bible_verses` (`version`, `book`, `chapter`, `verse`, `paragraph`, `content`) VALUES 
 ('LEB', '2 Thessalonians', '3', '1', '1', '<span class=\"verse-title\">Paul’s Prayer Request</span>Finally, brothers, pray for us, that the word of the Lord may progress and be honored, just as also <span class=\"supplied\">it was</span> with you,'),
-('LEB', '2 Thessalonians', '3', '2', '1', 'and that we may be delivered from evil and wicked people, <span class=\"idiom\">for not all have the faith</span><span class=\"note\">Literally “for not of all <span class=\"supplied\">is</span> the faith”</span>.'),
+('LEB', '2 Thessalonians', '3', '2', '1', 'and that we may be delivered from evil and wicked people, <span class=\"idiom\">for not all have the faith</span><span class=\"note\">“for not of all <span class=\"supplied\">is</span> the faith”</span>.'),
 ('LEB', '2 Thessalonians', '3', '3', '1', 'But the Lord is faithful, who will strengthen you and guard <span class=\"supplied\">you</span> from the evil one.'),
 ('LEB', '2 Thessalonians', '3', '4', '1', 'And we have confidence in the Lord about you, that you are both doing and you will do <span class=\"supplied\">the things</span> that we are commanding.'),
 ('LEB', '2 Thessalonians', '3', '5', '1', 'Now may the Lord direct your hearts toward the love of God and toward the patient endurance of Christ.'),
@@ -50,7 +50,7 @@ INSERT INTO `bible_verses` (`version`, `book`, `chapter`, `verse`, `paragraph`, 
 ('LEB', '2 Thessalonians', '3', '14', '3', 'But if anyone does not obey our message through this letter, take note not to associate with him, in order that he may be put to shame.'),
 ('LEB', '2 Thessalonians', '3', '15', '3', 'And do not consider <span class=\"supplied\">him</span> as an enemy, but admonish <span class=\"supplied\">him</span> as a brother.'),
 ('LEB', '2 Thessalonians', '3', '16', '5', '<span class=\"verse-title\">Final Greeting and Benediction</span>Now may the Lord of peace himself grant you peace through everything in every way. <span class=\"supplied\">May</span> the Lord <span class=\"supplied\">be</span> with all of you.'),
-('LEB', '2 Thessalonians', '3', '17', '5', 'The greeting <span class=\"supplied\">is</span> by my hand, Paul’s, which is <span class=\"idiom\">a sign of genuineness</span><span class=\"note\">Literally “a sign”</span>in every letter: <span class=\"idiom\">this is how I write</span><span class=\"note\">Literally “in this way I write”</span>.'),
+('LEB', '2 Thessalonians', '3', '17', '5', 'The greeting <span class=\"supplied\">is</span> by my hand, Paul’s, which is <span class=\"idiom\">a sign of genuineness</span><span class=\"note\">“a sign”</span>in every letter: <span class=\"idiom\">this is how I write</span><span class=\"note\">“in this way I write”</span>.'),
 ('LEB', '2 Thessalonians', '3', '18', '5', 'The grace of our Lord Jesus Christ <span class=\"supplied\">be</span> with all of you.')
 ;
 

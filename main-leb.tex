@@ -82,7 +82,7 @@
 \setlength{\parskip}{\baselineskip}%
 
 % book names font family and huge
-\titleformat{\chapter}[display]{\Huge\headings\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\chapter}[display]{\Huge\bfseries\headings\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 \titlespacing*{\chapter}{0pt}{0pt}{30pt}
 \titleformat{\section}[display]{\Huge\headings\centering}{\sectiontitlename\ \thesection}{20pt}{\Huge}
 \titlespacing*{\section}{0pt}{0pt}{0pt}
@@ -117,12 +117,11 @@
 \widowpenalty10000
 
 
-\iffalse
+
 \newlength{\versespacing}
 \setlength{\versespacing}{0pt}
 \newcommand{\versespace}{\hspace{\versespacing}}
 \frenchspacing
-\fi
 
 
 \newcommand\AtPageUpperRight[1]{\AtPageUpperLeft{%
@@ -176,11 +175,16 @@
   \fi
 }
 
+\deffootnotemark{\textsuperscript{\tiny\thefootnotemark}}
+
+\providecommand\lnsuperscript[1]{\mbox{$^{\mbox{\tiny#1}}$}}
+
+
 % 20200217 - https://tex.stackexchange.com/questions/26693/change-the-color-of-footnote-marker-in-latex
-\renewcommand\@makefnmark{\mbox{\@textsuperscript{\normalfont\color{\footnotemarkercolor}\@thefnmark}}\hspace{2pt}}
+\renewcommand\@makefnmark{\mbox{\lnsuperscript{\normalfont\color{\footnotemarkercolor}\@thefnmark}}\hspace{3pt}}
 
 \long\def\@makefntext#1{%
-  \noindent\hb@xt@ 6pt{\@makefnmark\hspace{-1.5pt}}#1%
+  \noindent\hb@xt@ 5.5pt{\@makefnmark\hspace{-1.5pt}}#1%
 }
 
 \newcount\biblechap@svdopt
@@ -196,6 +200,7 @@
 \newcommand{\@verse}{\fontsize{10.65pt}{10.65pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}\hspace{0pt}}
 \newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{~\color{\versenumcolor}{\thebibleverse\hspace{1.5pt}}}\fi\ignorespaces}
 \renewcommand{\verse}{\@verse\@showversenum}
+\renewcommand{\baselinestretch}{1}
 \newcommand{\verseWithHeading}[1]{%
   \@verse%
   \ifnum\c@bibleverse=1{\sectionstyle#1\newline}\else\vspace{5.2}\newline{\sectionstyle#1}\newline\fi\@showversenum}
@@ -494,6 +499,8 @@
 \input{leb/content/NT/jude.tex}\flushcolsend
 \input{leb/content/NT/revelation.tex}\flushcolsend
 
+% a blank page on the back of the page - next page on a new right-sided page
+\cleardoublepage
 
 \addcontentsline{toc}{part}{\headings{Extra Content}}
 
