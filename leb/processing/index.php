@@ -49,6 +49,7 @@ function reset_script($cmdHandle=null){
 
 
 $scriptsConfig = array(
+    /*
     [
 	'title' => 'Generate Footnote ID\'s',
 	'handle' => '1.indexnotes',
@@ -64,6 +65,14 @@ $scriptsConfig = array(
 	. 'Each book with chapters and verses is converted into a PHP class and is stored in a separate file. '
 	. 'This first step will enable all subsequent operations to be reused for other translations of the bible in future. '
 	. 'It will also reduce the server load for subsequent processes - otherwise the server would crash when performing complex operations!'
+    ],
+    */
+    [
+	'title' => 'Standardise XML',
+	'handle' => '2.renderlatex',
+	'status' => 0,
+	'description' => 'Read the SQLLite Database and generate .tex files. '
+	. 'Each book with chapters and verses is converted into a PHP class and is stored in a separate file. '
     ],
     /*
     [
