@@ -36,8 +36,15 @@
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{scrextend}
-\usepackage[para,perpage]{footmisc}
+\usepackage[para]{footmisc}
 \usepackage{fixfoot}
+\usepackage{chngcntr}
+\usepackage{setspace}
+\usepackage{contour}
+\usepackage{etex}
+\usepackage{hyphenat}
+
+
 
 \setmainfont{frankrhuel}[
   % Files
@@ -98,7 +105,10 @@
 \cfoot{\thepage}
 
 % set the footnote font style
-\renewcommand{\footnotelayout}{\small\frankrhuel}
+\renewcommand{\footnotelayout}{\vfill\frankrhuel}
+\renewcommand{\footnoterule}{\vfill\kern -3pt \hrule width 0.4\columnwidth \kern 2.6pt}
+\newcommand*{\multfootsep}{\textsuperscript{\normalfont,}}
+
 
 % cause the footnotes to be listed inline rather than on new lines
 \footglue=.25em plus.15em minus.15em
@@ -119,12 +129,17 @@
 \widowpenalty10000
 
 
-
-\newlength{\versespacing}
-\setlength{\versespacing}{0pt}
-\newcommand{\versespace}{\hspace{\versespacing}}
+%\newlength{\versespacing}
+%\setlength{\versespacing}{0pt}
+%\newcommand{\versespace}{\hspace{\versespacing}}
 \frenchspacing
 
+\AtBeginDocument{%
+  \begingroup\tiny%
+  \global\footnotesep=0.7\baselineskip%
+  \global\footnotebaselineskip\baselineskip%
+  \endgroup
+}
 
 \newcommand\AtPageUpperRight[1]{\AtPageUpperLeft{%
  \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
@@ -133,19 +148,35 @@
  \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
  }}%
 
-\newcommand{\sectionstyle}{\bfseries\raggedright\fontsize{11.5}{9pt}\selectfont\headings}
+\sodef\vh{}{-.03em}{0.25em plus0.45em minus 0.07em}{1em plus.1em minus.1em}
+\sodef\vt{}{-.03em}{0.2em plus0.35em minus 0.09em}{1em plus.1em minus.1em}
+\sodef\fnm{}{.1em}{0.1em plus0.1em minus 0.09em}{0.1em plus.1em minus.09em}
+\sodef\fnt{}{-0.04em}{0pt}{0pt}
+\sodef\soulVerseNum{}{.1em}{0.1em plus0.1em minus 0.09em}{0.1em plus.1em minus.09em}
+
+\newcommand{\sectionstyle}{\bfseries\raggedright\fontsize{10pt}{9.75pt}\selectfont\headings}
 \setsecheadstyle{\sectionstyle}
 \setbeforesecskip{0pt}
 \setaftersecskip{0pt}
 
-\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\fontsize{10pt}{9pt}\selectfont\headings}
+\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\fontsize{10pt}{9.75pt}\selectfont\headings}
 \setsubsecheadstyle{\subsectionstyle}
 \setbeforesubsecskip{0pt}
 \setaftersubsecskip{0pt}
 
 \makeatletter
-\newcommand\versenumcolor{red}
-\newcommand\footnotemarkercolor{darkgray}
+\patchcmd{\@footnotetext}{\footnotesize}{\tiny}{}{}
+
+\definecolor{JesusRed}{rgb}{0.68, 0.08, 0.08}
+\definecolor{HighlightGray}{rgb}{0.94, 0.94, 0.94}
+\definecolor{VerseUlColor}{rgb}{1, 1, 1}
+\definecolor{VerseNumColor}{rgb}{0.75, 0.75, 0.75}
+\definecolor{fnTextColor}{rgb}{0.53, 0.53, 0.53}
+\definecolor{fnBorderColor}{rgb}{0.95, 0.95, 0.95}
+\definecolor{fnBgColor}{rgb}{.98, .98, .98}
+%\definecolor{VerseNumColor}{rgb}{0.41, 0.41, 0.41}
+%\definecolor{VerseUlColor}{rgb}{0.85, 0.85, 0.85}
+\newcommand\versecolor{black}
 \newcommand\chapnumcolor{red}
 \newlength{\biblechapskip}
   \setlength{\biblechapskip}{0em plus .33em minus .2em}
@@ -172,21 +203,43 @@
 \newcommand{\lebnote}[1]{%
   %\footnote{\label{bibleverse}#1}
   \in@{:|NP|:}{#1}% ignore notes with a setting of "no print"
-  \ifin@{}\else{\footnote{#1}%
-  }
+  \ifin@{}\else{\footnote{#1}}%
   \fi
 }
 
-\deffootnotemark{\textsuperscript{\tiny\thefootnotemark}}
 
-\providecommand\lnsuperscript[1]{\mbox{$^{\mbox{\tiny#1}}$}}
+
+
+
+
+\newsavebox{\fnmarkboxbox}
+\newcommand{\fnmarkbox}[1]{%
+  \colorbox{fnBgColor}{%
+    \sbox{\fnmarkboxbox}{#1}%
+    \setlength{\fboxsep}{0.8pt}% don't add space
+    \setlength{\fboxrule}{0.08pt}%
+    \color{fnBorderColor}%
+    \fbox{\usebox{\fnmarkboxbox}}%
+  }%
+}
+
+
+
+\providecommand\lnsuperscript[1]{%
+  \setlength{\fboxsep}{0pt}%
+  \setlength{\fboxrule}{0pt}%
+  \fontsize{6.5pt}{5pt}\selectfont%
+  \raisebox{3pt\relax}{\fnmarkbox{\textcolor{fnTextColor}{#1}}}%
+  \fontsize{10.45pt}{10.45pt}\selectfont%
+}
+
 
 
 % 20200217 - https://tex.stackexchange.com/questions/26693/change-the-color-of-footnote-marker-in-latex
-\renewcommand\@makefnmark{\mbox{\lnsuperscript{\normalfont\color{\footnotemarkercolor}\@thefnmark}}\hspace{3pt}}
+\renewcommand\@makefnmark{\lnsuperscript{\@thefnmark}}%
 
-\long\def\@makefntext#1{%
-  \noindent\hb@xt@ 5.5pt{\@makefnmark\hspace{-1.5pt}}#1%
+\long\def\@makefntext#1{%\noindent\fontsize{7pt}{7pt}\selectfont\bfseries\fnm{[\@thefnmark] }\normalfont#1%
+  \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0pt}\noindent\fontsize{7pt}{-7pt}\selectfont\fnmarkbox{\textcolor{fnTextColor}{\@thefnmark}}\hspace{0.8pt}#1%
 }
 
 \newcount\biblechap@svdopt
@@ -197,18 +250,38 @@
   \setcounter{biblechapter}{\the\biblechap@svdopt}
   \stepcounter{biblechapter}
   \setbeforesecskip{0}\setbeforesubsecskip{0}
-  \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,lraise=0.4]{\lettrinefont\fontsize{30}{10}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
+  \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,lraise=0.4]{\lettrinefont\fontsize{30pt}{10pt}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
   {\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
-\newcommand{\@verse}{\fontsize{10.65pt}{10.65pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}\hspace{0pt}}
-\newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{~\color{\versenumcolor}{\thebibleverse\hspace{1.5pt}}}\fi\ignorespaces}
-\renewcommand{\verse}{\@verse\@showversenum}
-\renewcommand{\baselinestretch}{1}
+\newcommand{\@verse}{\fontsize{10.4pt}{10.5pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}\hspace{0pt}}%
+\newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{%
+  ~\color{VerseNumColor}{%
+    \bfseries%
+    \fontsize{10.4pt}{10.5pt}\selectfont%
+    \sbox0{$\thebibleverse$}% 
+    \raisebox{0pt\relax}{\thebibleverse}%
+    \normalfont%
+    \hspace{1.8pt}%
+  }%
+}\fi\ignorespaces}
+\renewcommand{\verse}{\fontsize{10.4pt}{10.5pt}\selectfont\vt{\@verse}\@showversenum}
+
 \newcommand{\verseWithHeading}[1]{%
   \@verse%
-  \ifnum\c@bibleverse=1{\sectionstyle#1\newline}\else\vspace{5.2}\newline{\sectionstyle#1}\newline\fi\@showversenum}
+  \ifnum\c@bibleverse=1{\sectionstyle\vh{#1}\newline}\else\vspace{3.8pt}\newline{\sectionstyle\nohyphens{\vh{#1}}}\newline\fi\@showversenum}
 \newcommand{\verseWithSubheading}[1]{%
   \@verse%
-  \ifnum\c@bibleverse=1{\subsectionstyle#1\newline}\else\vspace{5.2}\newline{\subsectionstyle#1}\newline\fi\@showversenum}
+  \ifnum\c@bibleverse=1{\subsectionstyle\vh{#1}\newline}\else\vspace{3.8pt}\newline{\subsectionstyle\nohyphens{\vh{#1}}}\newline\fi\@showversenum}
+\newcommand{\innerVerseHeading}[1]{%
+  \vspace{3.8pt}\newline{\subsectionstyle\vh{#1}}\newline}
+
+\newcommand{\JesusWords}[1]{%
+\color{JesusRed}#1\color{\versecolor}%
+}
+
+\newcommand{\dictionaryentry}[3]{\vspace{5pt}\textbf{#1}\markboth{#1}{#1}\ {(#2)}\ \ $\bullet$\ {#3}}
+
+\counterwithin*{footnote}{biblechapter}
+
 \makeatother
 
 
@@ -261,8 +334,14 @@
 \newcommand{\LORD}{\textsc{\headings{Lord}}\xspace}
 \newcommand{\LORDs}{\textsc{\headings{Lord's}}\xspace}
 
-\begin{document}
 
+
+%\setlength{\footnotesep}{24pt}%
+%\setlength{\skip\footins}{-24pt plus 3pt minus 3pt} % for example
+
+
+
+\begin{document}
 
 \frontmatter
 
@@ -407,48 +486,45 @@
 
 % Declare our footnote values for use with the fixfoot package
 \input{leb/content/footnotes.tex}
-
-
-\input{leb/content/OT/genesis.tex}\flushcolsend
-\input{leb/content/OT/exodus.tex}\flushcolsend
-\input{leb/content/OT/leviticus.tex}\flushcolsend
-\input{leb/content/OT/numbers.tex}\flushcolsend
-\input{leb/content/OT/deuteronomy.tex}\flushcolsend
-\input{leb/content/OT/joshua.tex}\flushcolsend
-\input{leb/content/OT/judges.tex}\flushcolsend
-\input{leb/content/OT/ruth.tex}\flushcolsend
-\input{leb/content/OT/1samuel.tex}\flushcolsend
-\input{leb/content/OT/2samuel.tex}\flushcolsend
-\input{leb/content/OT/1kings.tex}\flushcolsend
-\input{leb/content/OT/2kings.tex}\flushcolsend
-\input{leb/content/OT/1chronicles.tex}\flushcolsend
-\input{leb/content/OT/2chronicles.tex}\flushcolsend
-\input{leb/content/OT/ezra.tex}\flushcolsend
-\input{leb/content/OT/nehemiah.tex}\flushcolsend
-\input{leb/content/OT/esther.tex}\flushcolsend
-\input{leb/content/OT/job.tex}\flushcolsend
-\input{leb/content/OT/psalms.tex}\flushcolsend
-\input{leb/content/OT/proverbs.tex}\flushcolsend
-\input{leb/content/OT/ecclesiastes.tex}\flushcolsend
-\input{leb/content/OT/songofsolomon.tex}\flushcolsend
-\input{leb/content/OT/isaiah.tex}\flushcolsend
-\input{leb/content/OT/jeremiah.tex}\flushcolsend
-\input{leb/content/OT/lamentations.tex}\flushcolsend
-\input{leb/content/OT/ezekiel.tex}\flushcolsend
-\input{leb/content/OT/daniel.tex}\flushcolsend
-\input{leb/content/OT/hosea.tex}\flushcolsend
-\input{leb/content/OT/joel.tex}\flushcolsend
-\input{leb/content/OT/amos.tex}\flushcolsend
-\input{leb/content/OT/obadiah.tex}\flushcolsend
-\input{leb/content/OT/jonah.tex}\flushcolsend
-\input{leb/content/OT/micah.tex}\flushcolsend
-\input{leb/content/OT/nahum.tex}\flushcolsend
-\input{leb/content/OT/habakkuk.tex}\flushcolsend
-\input{leb/content/OT/zephaniah.tex}\flushcolsend
-\input{leb/content/OT/haggai.tex}\flushcolsend
-\input{leb/content/OT/zechariah.tex}\flushcolsend
-\input{leb/content/OT/malachi.tex}\flushcolsend
-
+\input{leb/content/old-testament/Gen.tex}\flushcolsend
+\input{leb/content/old-testament/Exo.tex}\flushcolsend
+\input{leb/content/old-testament/Lev.tex}\flushcolsend
+\input{leb/content/old-testament/Num.tex}\flushcolsend
+\input{leb/content/old-testament/Deu.tex}\flushcolsend
+\input{leb/content/old-testament/Josh.tex}\flushcolsend
+\input{leb/content/old-testament/Judg.tex}\flushcolsend
+\input{leb/content/old-testament/Ruth.tex}\flushcolsend
+\input{leb/content/old-testament/1Sam.tex}\flushcolsend
+\input{leb/content/old-testament/2Sam.tex}\flushcolsend
+\input{leb/content/old-testament/1Kgs.tex}\flushcolsend
+\input{leb/content/old-testament/2Kgs.tex}\flushcolsend
+\input{leb/content/old-testament/1Chr.tex}\flushcolsend
+\input{leb/content/old-testament/2Chr.tex}\flushcolsend
+\input{leb/content/old-testament/Ezr.tex}\flushcolsend
+\input{leb/content/old-testament/Neh.tex}\flushcolsend
+\input{leb/content/old-testament/Esth.tex}\flushcolsend
+\input{leb/content/old-testament/Job.tex}\flushcolsend
+\input{leb/content/old-testament/Ps.tex}\flushcolsend
+\input{leb/content/old-testament/Prov.tex}\flushcolsend
+\input{leb/content/old-testament/Eccl.tex}\flushcolsend
+\input{leb/content/old-testament/Song.tex}\flushcolsend
+\input{leb/content/old-testament/Isa.tex}\flushcolsend
+\input{leb/content/old-testament/Jer.tex}\flushcolsend
+\input{leb/content/old-testament/Lam.tex}\flushcolsend
+\input{leb/content/old-testament/Ezek.tex}\flushcolsend
+\input{leb/content/old-testament/Dan.tex}\flushcolsend
+\input{leb/content/old-testament/Hos.tex}\flushcolsend
+\input{leb/content/old-testament/Joel.tex}\flushcolsend
+\input{leb/content/old-testament/Am.tex}\flushcolsend
+\input{leb/content/old-testament/Oba.tex}\flushcolsend
+\input{leb/content/old-testament/Jona.tex}\flushcolsend
+\input{leb/content/old-testament/Mic.tex}\flushcolsend
+\input{leb/content/old-testament/Nah.tex}\flushcolsend
+\input{leb/content/old-testament/Hab.tex}\flushcolsend
+\input{leb/content/old-testament/Zeph.tex}\flushcolsend
+\input{leb/content/old-testament/Hag.tex}\flushcolsend
+\input{leb/content/old-testament/Zech.tex}\flushcolsend
+\input{leb/content/old-testament/Mal.tex}\flushcolsend
 
 % a blank page on the back of the page - next page on a new right-sided page
 \cleardoublepage
@@ -472,41 +548,47 @@
 \checkandfixthelayout 
 
 
-\input{leb/content/NT/matthew.tex}\flushcolsend
-\input{leb/content/NT/mark.tex}\flushcolsend
-\input{leb/content/NT/luke.tex}\flushcolsend
-
-\input{leb/content/NT/john.tex}\flushcolsend
-\input{leb/content/NT/acts.tex}\flushcolsend
-\input{leb/content/NT/romans.tex}\flushcolsend
-\input{leb/content/NT/1corinthians.tex}\flushcolsend
-\input{leb/content/NT/2corinthians.tex}\flushcolsend
-\input{leb/content/NT/galatians.tex}\flushcolsend
-\input{leb/content/NT/ephesians.tex}\flushcolsend
-\input{leb/content/NT/philippians.tex}\flushcolsend
-\input{leb/content/NT/colossians.tex}\flushcolsend
-\input{leb/content/NT/1thessalonians.tex}\flushcolsend
-\input{leb/content/NT/2thessalonians.tex}\flushcolsend
-\input{leb/content/NT/1timothy.tex}\flushcolsend
-\input{leb/content/NT/2timothy.tex}\flushcolsend
-\input{leb/content/NT/titus.tex}\flushcolsend
-\input{leb/content/NT/philemon.tex}\flushcolsend
-\input{leb/content/NT/hebrews.tex}\flushcolsend
-\input{leb/content/NT/james.tex}\flushcolsend
-\input{leb/content/NT/1peter.tex}\flushcolsend
-\input{leb/content/NT/2peter.tex}\flushcolsend
-\input{leb/content/NT/1john.tex}\flushcolsend
-\input{leb/content/NT/2john.tex}\flushcolsend
-\input{leb/content/NT/3john.tex}\flushcolsend
-\input{leb/content/NT/jude.tex}\flushcolsend
-\input{leb/content/NT/revelation.tex}\flushcolsend
-
+\input{leb/content/new-testament/Mat.tex}\flushcolsend
+\input{leb/content/new-testament/Mar.tex}\flushcolsend
+\input{leb/content/new-testament/Luk.tex}\flushcolsend
+\input{leb/content/new-testament/John.tex}\flushcolsend
+\input{leb/content/new-testament/Acts.tex}\flushcolsend
+\input{leb/content/new-testament/Rom.tex}\flushcolsend
+\input{leb/content/new-testament/1Cor.tex}\flushcolsend
+\input{leb/content/new-testament/2Cor.tex}\flushcolsend
+\input{leb/content/new-testament/Gal.tex}\flushcolsend
+\input{leb/content/new-testament/Eph.tex}\flushcolsend
+\input{leb/content/new-testament/Phil.tex}\flushcolsend
+\input{leb/content/new-testament/Col.tex}\flushcolsend
+\input{leb/content/new-testament/1Ths.tex}\flushcolsend
+\input{leb/content/new-testament/2Ths.tex}\flushcolsend
+\input{leb/content/new-testament/1Tim.tex}\flushcolsend
+\input{leb/content/new-testament/2Tim.tex}\flushcolsend
+\input{leb/content/new-testament/Tit.tex}\flushcolsend
+\input{leb/content/new-testament/Phlm.tex}\flushcolsend
+\input{leb/content/new-testament/Heb.tex}\flushcolsend
+\input{leb/content/new-testament/Jam.tex}\flushcolsend
+\input{leb/content/new-testament/1Pet.tex}\flushcolsend
+\input{leb/content/new-testament/2Pet.tex}\flushcolsend
+\input{leb/content/new-testament/1Jn.tex}\flushcolsend
+\input{leb/content/new-testament/2Jn.tex}\flushcolsend
+\input{leb/content/new-testament/3Jn.tex}\flushcolsend
+\input{leb/content/new-testament/Jud.tex}\flushcolsend
+\input{leb/content/new-testament/Rev.tex}\flushcolsend
 % a blank page on the back of the page - next page on a new right-sided page
 \cleardoublepage
 
 \addcontentsline{toc}{part}{\headings{Extra Content}}
 
 \addcontentsline{toc}{chapter}{\headings{Concordance}}
+
+
+% one page of dictionary is a nice idea - some words used in this translation are a bit rare in everyday language
+\thispagestyle{empty}
+\singlecolumn
+\input{leb/content/dictionary.tex}\flushcolsend
+\clearpage
+\newpage
 
 % now we are going to include a concordance. The NWT has a fairly handy one and it is easily accesible.
 % @TOTO: create a customised concordance
@@ -518,29 +600,32 @@
 \thispagestyle{empty}
 \mbox{}
 
+
+
+
+
+
 % let's also include a few of the maps from the NWT. It is nice to look at maps sometimes, when considering the geography relating to events.
 \addcontentsline{toc}{chapter}{\headings{Diagrams and Maps}}
-
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/units-of-measure.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/settlement-of-the-promised-land.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/israel-in-times-of-king-david-and-solomon.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/israel-in-time-of-jesus.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/second-temple-mount.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/spread-of-christianity.png}
-\includepdf[noautoscale=true, scale=1]{leb/content/pictures/units-of-measure.png}
+
+
+
+
+
 
 
 
 % an empty page at the back
-\begin{titlingpage}
-
 \clearpage
 \newpage
-\thispagestyle{empty}
+
 \mbox{}
-
-\end{titlingpage}
-
-
 
 
 \end{document}

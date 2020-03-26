@@ -68,7 +68,7 @@ $scriptsConfig = array(
     ],
     */
     [
-	'title' => 'Standardise XML',
+	'title' => 'Render LaTeX files from SQLite3 DB',
 	'handle' => '2.renderlatex',
 	'status' => 0,
 	'description' => 'Read the SQLLite Database and generate .tex files. '
