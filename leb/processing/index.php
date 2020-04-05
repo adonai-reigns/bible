@@ -49,24 +49,7 @@ function reset_script($cmdHandle=null){
 
 
 $scriptsConfig = array(
-    /*
-    [
-	'title' => 'Generate Footnote ID\'s',
-	'handle' => '1.indexnotes',
-	'status' => 0,
-	'description' => 'Some of the footnotes are repeated a lot. It is best if we can consolidate every reference to a footnote into a single footnote, per page. '
-	. 'To do this, we need to assign a unique id for each footnote pattern, and every repeated occurence of that footnote pattern shall use the id as the handle.'
-    ],
-    [
-	'title' => 'Standardise XML',
-	'handle' => '1.standardise',
-	'status' => 0,
-	'description' => 'Loop through all books in the XML file and convert the data into a standardised format. '
-	. 'Each book with chapters and verses is converted into a PHP class and is stored in a separate file. '
-	. 'This first step will enable all subsequent operations to be reused for other translations of the bible in future. '
-	. 'It will also reduce the server load for subsequent processes - otherwise the server would crash when performing complex operations!'
-    ],
-    */
+
     [
 	'title' => 'Render LaTeX files from SQLite3 DB',
 	'handle' => '2.renderlatex',

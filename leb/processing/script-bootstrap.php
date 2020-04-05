@@ -6,15 +6,6 @@ defined('BIBLE_IMPORT_SCRIPT_EXEC') or die('it fails');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'Bible'.DIRECTORY_SEPARATOR.'BibleBase.php');
-
-
-
-
-
-
-
-
 
 // Old Testament
 $bookSystemNamesOT = array(
