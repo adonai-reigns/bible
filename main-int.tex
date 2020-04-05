@@ -1,0 +1,632 @@
+\documentclass[twopage,twocolumn,10pt,openany]{memoir}
+
+
+\setstocksize{9in}{6in}% 6in x 9in
+\settrimmedsize{9in}{6in}{*}
+\settrims{0in}{0in}
+
+
+\quarkmarks
+
+
+\usepackage{lipsum}
+\usepackage{fixltx2e}
+\usepackage{xspace}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{lettrine}
+\usepackage{flushend}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{fontspec}
+\usepackage{ifpdf}
+\usepackage{eso-pic}
+\usepackage[british]{babel}
+\usepackage{titlesec}
+\usepackage{blindtext}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{xifthen}
+\usepackage{csquotes}
+\usepackage{ragged2e}
+\usepackage{titletoc}
+\usepackage{soul}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage[para]{footmisc}
+\usepackage{fixfoot}
+\usepackage{chngcntr}
+\usepackage{setspace}
+\usepackage{contour}
+\usepackage{etex}
+\usepackage{hyphenat}
+
+
+
+\setmainfont{frankrhuel}[
+  % Files
+  Path      = fonts/frankrhuel/ ,
+  % Fonts
+  UprightFont     = FrankRuehlCLM-Medium.ttf ,
+  UprightFeatures = { SmallCapsFont = FrankRuehlCLM-Medium.ttf, } ,
+  BoldFont        = FrankRuehlCLM-Bold.ttf,
+  BoldFeatures    = { SmallCapsFont = FrankRuehlCLM-Bold.ttf } ,
+  ItalicFont      = FrankRuehlCLM-MediumOblique.ttf ,
+  BoldItalicFont  = FrankRuehlCLM-BoldOblique.ttf ,
+  % Features
+  Numbers         = OldStyle,
+  WordSpace       = 0.8
+ ]
+
+
+% old-style numbers don't look great as drop-caps
+\newfontfamily{\lettrinefont}{AlegreyaSC}[
+  % Files
+  Path      = fonts/alegreya-sc/ ,
+  % Fonts
+  UprightFont     = *-Regular.ttf ,
+  UprightFeatures = { SmallCapsFont = *-Regular.ttf } ,
+  BoldFont        = *-Bold.ttf ,
+  BoldFeatures    = { SmallCapsFont = *-Bold.ttf } ,
+  ItalicFont      = *-Italic.ttf ,
+  BoldItalicFont  = *-BoldItalic.ttf]
+
+
+
+% old-style numbers don't look great as drop-caps
+\newfontfamily{\headings}{AlegreyaSC}[
+  % Files
+  Path      = fonts/alegreya-sc/ ,
+  % Fonts
+  UprightFont     = *-Regular.ttf ,
+  UprightFeatures = { SmallCapsFont = *-Regular.ttf } ,
+  BoldFont        = *-Bold.ttf ,
+  BoldFeatures    = { SmallCapsFont = *-Bold.ttf } ,
+  ItalicFont      = *-Italic.ttf ,
+  BoldItalicFont  = *-BoldItalic.ttf]
+
+\setlength{\parskip}{\baselineskip}%
+
+% book names font family and huge
+\titleformat{\chapter}[display]{\Huge\bfseries\headings\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+\titleformat{\section}[display]{\Huge\headings\centering}{\sectiontitlename\ \thesection}{20pt}{\Huge}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titleformat{\subsection}[display]{\Large\headings}{\subsectiontitlename\ \thesubsection}{20pt}{\Large}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+
+
+% the page number in the bottom centre of each page
+\cfoot{\thepage}
+
+% set the footnote font style
+\renewcommand{\footnotelayout}{\vfill\frankrhuel}
+\renewcommand{\footnoterule}{\vfill\kern -3pt \hrule width 0.4\columnwidth \kern 2.6pt}
+%\newcommand*{\multfootsep}{\textsuperscript{\normalfont,}}
+
+
+% cause the footnotes to be listed inline rather than on new lines
+\footglue=.25em plus.15em minus.15em
+
+\renewcommand{\headrule}{\hbox to\headwidth{%
+    \color{white}\leaders\hrule height 0 \hfill}}
+
+
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue, urlbordercolor={0 1 1}}
+
+\newcommand{\framesize}{\textwidth}
+\setlength{\headwidth}{\textwidth}
+\setlength{\columnseprule}{0pt}
+
+% space below the page header
+\setheaderspaces{*}{0mm}{*}
+\clubpenalty10000
+\widowpenalty10000
+
+
+%\newlength{\versespacing}
+%\setlength{\versespacing}{0pt}
+%\newcommand{\versespace}{\hspace{\versespacing}}
+\frenchspacing
+
+\AtBeginDocument{%
+  \begingroup\tiny%
+  \global\footnotesep=0.7\baselineskip%
+  \global\footnotebaselineskip\baselineskip%
+  \endgroup
+}
+
+\newcommand\AtPageUpperRight[1]{\AtPageUpperLeft{%
+ \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
+ }}%
+\newcommand\AtPageLowerRight[1]{\AtPageLowerLeft{%
+ \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
+ }}%
+
+\sodef\vh{}{-.03em}{0.25em plus0.45em minus 0.07em}{1em plus.1em minus.1em}
+\sodef\vt{}{-.03em}{0.2em plus0.35em minus 0.09em}{1em plus.1em minus.1em}
+\sodef\fnm{}{.1em}{0.1em plus0.1em minus 0.09em}{0.1em plus.1em minus.09em}
+\sodef\fnt{}{-0.04em}{0pt}{0pt}
+\sodef\soulVerseNum{}{.1em}{0.1em plus0.1em minus 0.09em}{0.1em plus.1em minus.09em}
+
+\newcommand{\sectionstyle}{\bfseries\raggedright\fontsize{10pt}{9.75pt}\selectfont\headings}
+\setsecheadstyle{\sectionstyle}
+\setbeforesecskip{0pt}
+\setaftersecskip{0pt}
+
+\newcommand{\subsectionstyle}{\bfseries\itshape\raggedright\fontsize{10pt}{9.75pt}\selectfont\headings}
+\setsubsecheadstyle{\subsectionstyle}
+\setbeforesubsecskip{0pt}
+\setaftersubsecskip{0pt}
+
+\makeatletter
+\patchcmd{\@footnotetext}{\footnotesize}{\tiny}{}{}
+
+\definecolor{JesusRed}{rgb}{0.68, 0.08, 0.08}
+\definecolor{HighlightGray}{rgb}{0.94, 0.94, 0.94}
+\definecolor{VerseUlColor}{rgb}{1, 1, 1}
+\definecolor{VerseNumColor}{rgb}{0.75, 0.75, 0.75}
+\definecolor{fnTextColor}{rgb}{0.53, 0.53, 0.53}
+\definecolor{fnBorderColor}{rgb}{0.95, 0.95, 0.95}
+\definecolor{fnBgColor}{rgb}{.98, .98, .98}
+%\definecolor{VerseNumColor}{rgb}{0.41, 0.41, 0.41}
+%\definecolor{VerseUlColor}{rgb}{0.85, 0.85, 0.85}
+\newcommand\versecolor{black}
+\newcommand\chapnumcolor{red}
+\newlength{\biblechapskip}
+  \setlength{\biblechapskip}{0em plus .33em minus .2em}
+\newcounter{biblechapter}
+\newcounter{bibleverse}[biblechapter]
+\renewcommand\chaptername{Book}
+\newcommand{\customsection}[2][]{%
+  \ifthenelse{\isempty{#1}}%
+    % use the section title name for the TOC contents line
+    {\section*{#2}\addcontentsline{toc}{part}{\headings{#2}}}
+    % permit an override value to be used in TOC
+    {\section*{#2}\addcontentsline{toc}{part}{\headings{#1}}}
+}
+\newcommand{\biblebook}[2][]{%
+  \setcounter{biblechapter}{0}
+  \ifthenelse{\isempty{#1}}%
+    % use the section title name for the TOC contents line
+    {\gdef\currbook{#2}\chapter*{#2}\addcontentsline{toc}{chapter}{\headings{#2}}}
+    % permit an override value to be used in TOC
+    {\gdef\currbook{#2}\chapter*{#2}\addcontentsline{toc}{chapter}{\headings{#1}}}
+}
+
+% our custom macro for footnotes
+\newcommand{\lebnote}[1]{%
+  %\footnote{\label{bibleverse}#1}
+  \in@{:|NP|:}{#1}% ignore notes with a setting of "no print"
+  \ifin@{}\else{\footnote{#1}}%
+  \fi
+}
+
+
+
+
+
+
+\newsavebox{\fnmarkboxbox}
+\newcommand{\fnmarkbox}[1]{%
+  \colorbox{fnBgColor}{%
+    \sbox{\fnmarkboxbox}{#1}%
+    \setlength{\fboxsep}{0.8pt}% don't add space
+    \setlength{\fboxrule}{0.08pt}%
+    \color{fnBorderColor}%
+    \fbox{\usebox{\fnmarkboxbox}}%
+  }%
+}
+
+
+
+\providecommand\lnsuperscript[1]{%
+  \setlength{\fboxsep}{0pt}%
+  \setlength{\fboxrule}{0pt}%
+  \fontsize{6.5pt}{5pt}\selectfont%
+  \raisebox{3pt\relax}{\fnmarkbox{\textcolor{fnTextColor}{#1}}}%
+  \fontsize{10.45pt}{10.45pt}\selectfont%
+}
+
+
+
+% 20200217 - https://tex.stackexchange.com/questions/26693/change-the-color-of-footnote-marker-in-latex
+\renewcommand\@makefnmark{\lnsuperscript{\@thefnmark}}%
+
+\long\def\@makefntext#1{%\noindent\fontsize{7pt}{7pt}\selectfont\bfseries\fnm{[\@thefnmark] }\normalfont#1%
+  \setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0pt}\noindent\fontsize{7pt}{-7pt}\selectfont\fnmarkbox{\textcolor{fnTextColor}{\@thefnmark}}\hspace{0.8pt}#1%
+}
+
+\newcount\biblechap@svdopt
+\newenvironment{biblechapter}[1][\thebiblechapter]
+  {\biblechap@svdopt=#1
+  \ifnum\c@biblechapter=\biblechap@svdopt\else
+    \advance\biblechap@svdopt by -1\fi
+  \setcounter{biblechapter}{\the\biblechap@svdopt}
+  \stepcounter{biblechapter}
+  \setbeforesecskip{0}\setbeforesubsecskip{0}
+  \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,lraise=0.4]{\lettrinefont\fontsize{30pt}{10pt}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
+  {\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
+\newcommand{\@verse}{\fontsize{10.4pt}{10.5pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}\hspace{0pt}}%
+\newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{%
+  ~\color{VerseNumColor}{%
+    \bfseries%
+    \fontsize{10.4pt}{10.5pt}\selectfont%
+    \sbox0{$\thebibleverse$}% 
+    \raisebox{0pt\relax}{\thebibleverse}%
+    \normalfont%
+    \hspace{1.8pt}%
+  }%
+}\fi\ignorespaces}
+\renewcommand{\verse}{\fontsize{10.4pt}{10.5pt}\selectfont\vt{\@verse}\@showversenum}
+
+\newcommand{\verseWithHeading}[1]{%
+  \@verse%
+  \ifnum\c@bibleverse=1{\sectionstyle\vh{#1}\newline}\else\vspace{3.8pt}\newline{\sectionstyle\nohyphens{\vh{#1}}}\newline\fi\@showversenum}
+
+\newcommand{\verseWithSubheading}[1]{%
+  \@verse%
+  \ifnum\c@bibleverse=1{\subsectionstyle\vh{#1}\newline}\else\vspace{3.8pt}\newline{\subsectionstyle\nohyphens{\vh{#1}}}\newline\fi\@showversenum}
+\newcommand{\innerVerseHeading}[1]{%
+  \vspace{3.8pt}\newline{\subsectionstyle\vh{#1}}\newline}
+
+\newcommand{\JesusWords}[1]{%
+\color{JesusRed}#1\color{\versecolor}%
+}
+
+\newcommand{\dictionaryentry}[3]{\vspace{5pt}\textbf{#1}\markboth{#1}{#1}\ {(#2)}\ \ $\bullet$\ {#3}}
+
+\counterwithin*{footnote}{biblechapter}
+
+\makeatother
+
+
+%\newcommand{\startornaments}{\AddToShipoutPictureBG{%
+%  \checkoddpage%
+%  \ifoddpage%
+%   \AtPageUpperRight{\put(-100,-55){\pgfornament[width=1.75cm,symmetry=h,color=black]{195}}}%
+%   \AtPageLowerRight{\put(-100,55){\pgfornament[width=1.75cm,symmetry=v,color=black]{194}}}%
+% \else%
+%   \AtPageUpperLeft{\put(10,-55){\pgfornament[width=1.75cm,symmetry=h,color=black]{194}}}%
+%   \AtPageLowerLeft{\put(10,55){\pgfornament[width=1.75cm,symmetry=v,color=black]{195}}}
+% \fi}}
+
+\newcommand{\stopornaments}{\ClearShipoutPictureBG}
+
+\renewcommand{\printparttitle}[1]{%
+  \thispagestyle{empty}%
+  \addcontentsline{toc}{part}{#1}%
+  \vspace*{\fill}%
+  \begin{tikzpicture}[transform shape,every node/.style={inner sep=0pt}]%
+    \node[minimum size=\framesize](vecbox){};%
+  \node[inner sep=6pt, color=black] (text) at (vecbox.center){%
+    \HUGE \headings{\textsc{#1}}};%
+  \node[anchor=north, color=Goldenrod] (base) at (text.south){%
+    \pgfornament[width=0.5*\framesize]{88}};%
+  \end{tikzpicture}%
+  \vspace*{\fill}}
+
+\makechapterstyle{dash-embiggened}{%
+  \chapterstyle{default}
+  \setlength{\beforechapskip}{5\onelineskip}
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapternamenum}{}
+  \renewcommand*{\chapnumfont}{\normalfont\Huge}
+  \settoheight{\midchapskip}{\chapnumfont 1}
+  \renewcommand*{\printchapternum}{\centering \chapnumfont
+    \rule[0.5\midchapskip]{1em}{0.4pt} \thechapter\
+    \rule[0.5\midchapskip]{1em}{0.4pt}}
+  \renewcommand*{\afterchapternum}{\par\nobreak\vskip 0.5\onelineskip}
+  \renewcommand*{\printchapternonum}{\centering
+                 \vphantom{\chapnumfont 1}\afterchapternum}
+  \renewcommand*{\chaptitlefont}{\normalfont\HUGE\scshape}
+  \renewcommand*{\printchaptertitle}[1]{\centering \chaptitlefont ##1}
+  \setlength{\afterchapskip}{2.5\onelineskip}}
+
+\chapterstyle{dash-embiggened}
+
+
+
+\newcommand{\LORD}{\textsc{\headings{Lord}}\xspace}
+\newcommand{\LORDs}{\textsc{\headings{Lord's}}\xspace}
+
+
+
+%\setlength{\footnotesep}{24pt}%
+%\setlength{\skip\footins}{-24pt plus 3pt minus 3pt} % for example
+
+\newcommand*{\justifyheading}{\raggedleft}
+
+\begin{document}
+
+\frontmatter
+
+\setlrmarginsandblock{0.4375in}{0.3125in}{*}
+\setulmarginsandblock{0.5in}{0.75in}{1}
+
+\checkandfixthelayout 
+
+
+
+\begin{titlingpage}
+
+% a tribute to the cause for this publication.
+\begin{center}
+\includegraphics[width=126mm,height=192mm,keepaspectratio]{./leb/content/pictures/the_good_shepherd_by_poundcakery_d5hiu3j_deviantart.com.jpg}
+%\includepdf{leb/content/pictures/the_good_shepherd_by_poundcakery_d5hiu3j_deviantart.com.jpg}
+\end{center}
+\end{titlingpage}
+
+
+
+
+
+
+
+
+\begin{titlingpage}
+
+\title{\Huge \headings{The Holy Bible}}
+\date{}
+\author{}
+
+
+\setlrmarginsandblock{0.75in}{0.75in}{*}
+
+\checkandfixthelayout 
+\vspace*{\fill}
+\begin{tikzpicture}[color=Gold,
+    transform shape,
+    every node/.style={inner sep=0pt}]
+  \node[minimum size=\framesize,fill=Beige!10](vecbox){};
+  \node[anchor=north west] at (vecbox.north west){%
+    \pgfornament[width=0.2*\framesize]{131}};
+  \node[anchor=north east] at (vecbox.north east){%
+    \pgfornament[width=0.2*\framesize,symmetry=v]{131}};
+  \node[anchor=south west] at (vecbox.south west){%
+    \pgfornament[width=0.2*\framesize,symmetry=h]{131}};
+  \node[anchor=south east] at (vecbox.south east){%
+    \pgfornament[width=0.2*\framesize,symmetry=c]{131}};
+  \node[anchor=north] at (vecbox.north){%
+    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
+  \node[anchor=south] at (vecbox.south){%
+    \pgfornament[width=0.6*\framesize]{85}};
+  \node[anchor=north,rotate=90] at (vecbox.west){%
+    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
+  \node[anchor=north,rotate=-90] at (vecbox.east){%
+    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
+  \node[inner sep=6pt, color=black] (text) at (vecbox.center){%
+    \HUGE \textsc{\headings{The Holy Bible}}};
+  \node[anchor=north, color=Goldenrod] (base) at (text.south){%
+    \pgfornament[width=0.5*\framesize]{71}};
+  \node[anchor=south, color=Goldenrod] at (text.north){%
+    \pgfornament[width=0.5*\framesize,symmetry=h]{71}};
+\end{tikzpicture}
+\vspace*{\fill}
+\end{titlingpage}
+
+
+
+
+\onecolumn
+\renewcommand{\contentsname}{\headings{Books of The Holy Bible}}
+
+
+% toc font styles
+\titlecontents{part}[3mm]{\normalsize\bfseries}{PART\space\thecontentslabel:\space\MakeUppercase}{}{\normalfont\dotfill\makebox[12mm][l]{\thecontentspage}}
+\titlecontents{chapter}[3mm]{\vspace{-12pt}\normalsize}{}{}{\dotfill\makebox[12mm][l]{\thecontentspage}}
+
+
+% some help from % https://tex.stackexchange.com/questions/389319/making-the-second-column-of-the-table-of-contents-clear-the-page-header
+\makeatletter  
+\singlespacing
+\begingroup % start a TeX group
+\color{colortoc}% or whatever color you wish to use
+\chapter*{\contentsname
+  \@mkboth{%
+    \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}
+% If you want to turn off columns being forced to equal height, use the starred version \begin{multicols*}{2}.
+\begin{multicols}{2}
+\setlrmarginsandblock{0.8375in}{0.3125in}{*}
+\checkandfixthelayout 
+  \@starttoc{toc}
+\end{multicols}
+\endgroup   % end of TeX group
+\makeatother
+
+
+\twocolumn
+
+
+
+
+% a blank page on the back of the page - lext page on a new right-sided page
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+\input{leb/content/preface.tex}
+
+\mainmatter
+
+
+\setlrmarginsandblock{0.5625in}{0.3125in}{*}
+
+% the book name, chapter and verse number at the top of the page
+\setcolsepandrule{0.125in}{0pt}
+\fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
+\fancyhfoffset[RO]{1pt}
+
+\setlength\textwidth{5.125in}
+\setlength\columnwidth{2.5in}
+\setlength\columnsep{0.125in}
+\checkandfixthelayout 
+
+
+\part*{\headings{The Old Testament}}
+
+% a blank page on the back of the page - next page on a new right-sided page
+\clearpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\endpage
+\newpage
+
+
+
+\endpage
+\newpage
+
+
+% Declare our footnote values for use with the fixfoot package
+%\input{leb/content/footnotes.tex}
+
+\input{int/content/old-testament/Gen.tex}\flushcolsend
+\input{int/content/old-testament/Exo.tex}\flushcolsend
+\input{int/content/old-testament/Lev.tex}\flushcolsend
+\input{int/content/old-testament/Num.tex}\flushcolsend
+\input{int/content/old-testament/Deu.tex}\flushcolsend
+\input{int/content/old-testament/Josh.tex}\flushcolsend
+\input{int/content/old-testament/Judg.tex}\flushcolsend
+\input{int/content/old-testament/Ruth.tex}\flushcolsend
+\input{int/content/old-testament/1Sam.tex}\flushcolsend
+\input{int/content/old-testament/2Sam.tex}\flushcolsend
+\input{int/content/old-testament/1Kgs.tex}\flushcolsend
+\input{int/content/old-testament/2Kgs.tex}\flushcolsend
+\input{int/content/old-testament/1Chr.tex}\flushcolsend
+\input{int/content/old-testament/2Chr.tex}\flushcolsend
+\input{int/content/old-testament/Ezr.tex}\flushcolsend
+\input{int/content/old-testament/Neh.tex}\flushcolsend
+\input{int/content/old-testament/Esth.tex}\flushcolsend
+\input{int/content/old-testament/Job.tex}\flushcolsend
+\input{int/content/old-testament/Ps.tex}\flushcolsend
+\input{int/content/old-testament/Prov.tex}\flushcolsend
+\input{int/content/old-testament/Eccl.tex}\flushcolsend
+\input{int/content/old-testament/Song.tex}\flushcolsend
+\input{int/content/old-testament/Isa.tex}\flushcolsend
+\input{int/content/old-testament/Jer.tex}\flushcolsend
+\input{int/content/old-testament/Lam.tex}\flushcolsend
+\input{int/content/old-testament/Ezek.tex}\flushcolsend
+\input{int/content/old-testament/Dan.tex}\flushcolsend
+\input{int/content/old-testament/Hos.tex}\flushcolsend
+\input{int/content/old-testament/Joel.tex}\flushcolsend
+\input{int/content/old-testament/Am.tex}\flushcolsend
+\input{int/content/old-testament/Oba.tex}\flushcolsend
+\input{int/content/old-testament/Jona.tex}\flushcolsend
+\input{int/content/old-testament/Mic.tex}\flushcolsend
+\input{int/content/old-testament/Nah.tex}\flushcolsend
+\input{int/content/old-testament/Hab.tex}\flushcolsend
+\input{int/content/old-testament/Zeph.tex}\flushcolsend
+\input{int/content/old-testament/Hag.tex}\flushcolsend
+\input{int/content/old-testament/Zech.tex}\flushcolsend
+\input{int/content/old-testament/Mal.tex}\flushcolsend
+
+% a blank page on the back of the page - next page on a new right-sided page
+\cleardoublepage
+
+
+
+\setlrmarginsandblock{0.5625in}{0.3125in}{*}
+\checkandfixthelayout 
+
+\part*{\headings{The New Testament}}
+
+
+% a blank page on the back of the page - next page on a new right-sided page
+\clearpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+
+\setlrmarginsandblock{0.5625in}{0.3125in}{*}
+\checkandfixthelayout 
+
+\input{int/content/new-testament/Mat.tex}\flushcolsend
+\input{int/content/new-testament/Mar.tex}\flushcolsend
+\input{int/content/new-testament/Luk.tex}\flushcolsend
+\input{int/content/new-testament/John.tex}\flushcolsend
+\input{int/content/new-testament/Acts.tex}\flushcolsend
+\input{int/content/new-testament/Rom.tex}\flushcolsend
+\input{int/content/new-testament/1Cor.tex}\flushcolsend
+\input{int/content/new-testament/2Cor.tex}\flushcolsend
+\input{int/content/new-testament/Gal.tex}\flushcolsend
+\input{int/content/new-testament/Eph.tex}\flushcolsend
+\input{int/content/new-testament/Phil.tex}\flushcolsend
+\input{int/content/new-testament/Col.tex}\flushcolsend
+\input{int/content/new-testament/1Ths.tex}\flushcolsend
+\input{int/content/new-testament/2Ths.tex}\flushcolsend
+\input{int/content/new-testament/1Tim.tex}\flushcolsend
+\input{int/content/new-testament/2Tim.tex}\flushcolsend
+\input{int/content/new-testament/Tit.tex}\flushcolsend
+\input{int/content/new-testament/Phlm.tex}\flushcolsend
+\input{int/content/new-testament/Heb.tex}\flushcolsend
+\input{int/content/new-testament/Jam.tex}\flushcolsend
+\input{int/content/new-testament/1Pet.tex}\flushcolsend
+\input{int/content/new-testament/2Pet.tex}\flushcolsend
+\input{int/content/new-testament/1Jn.tex}\flushcolsend
+\input{int/content/new-testament/2Jn.tex}\flushcolsend
+\input{int/content/new-testament/3Jn.tex}\flushcolsend
+\input{int/content/new-testament/Jud.tex}\flushcolsend
+\input{int/content/new-testament/Rev.tex}\flushcolsend
+
+% a blank page on the back of the page - next page on a new right-sided page
+\cleardoublepage
+
+\addcontentsline{toc}{part}{\headings{Extra Content}}
+
+\addcontentsline{toc}{chapter}{\headings{Concordance}}
+
+
+% one page of dictionary is a nice idea - some words used in this translation are a bit rare in everyday language
+\thispagestyle{empty}
+\singlecolumn
+\input{leb/content/dictionary.tex}\flushcolsend
+\clearpage
+\newpage
+
+% now we are going to include a concordance. The NWT has a fairly handy one and it is easily accesible.
+% @TOTO: create a customised concordance
+
+\includepdf[pages=-]{leb/content/concordance-6x9.pdf}
+
+\clearpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+
+
+
+
+
+% let's also include a few of the maps from the NWT. It is nice to look at maps sometimes, when considering the geography relating to events.
+\addcontentsline{toc}{chapter}{\headings{Diagrams and Maps}}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/units-of-measure.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/settlement-of-the-promised-land.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/israel-in-times-of-king-david-and-solomon.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/israel-in-time-of-jesus.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/second-temple-mount.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/spread-of-christianity.png}
+
+
+
+
+
+
+
+
+% an empty page at the back
+\clearpage
+\newpage
+
+\mbox{}
+
+
+\end{document}
