@@ -46,7 +46,7 @@
 
 
 
-\setmainfont{frankrhuel}[
+\setmainfont{\frankrhuel}[
   % Files
   Path      = fonts/frankrhuel/ ,
   % Fonts
@@ -58,22 +58,56 @@
   BoldItalicFont  = FrankRuehlCLM-BoldOblique.ttf ,
   % Features
   Numbers         = OldStyle,
-  WordSpace       = 0.8
+  WordSpace       = 0.65
  ]
 
 
 % old-style numbers don't look great as drop-caps
-\newfontfamily{\lettrinefont}{AlegreyaSC}[
+\newfontfamily{\lettrinefont}{Bodoni12_ITC}[
   % Files
-  Path      = fonts/alegreya-sc/ ,
+  Path      = fonts/numbers/ ,
+  % Fonts
+  UprightFont     = *-Regular.ttf ,
+  UprightFeatures = { SmallCapsFont = *-Regular.ttf } ,
+  BoldFont        = *-Regular.ttf ,
+  BoldFeatures    = { SmallCapsFont = *-Regular.ttf } ,
+  ItalicFont      = *-Regular.ttf ,
+  BoldItalicFont  = *-Regular.ttf,
+  % Features
+  Numbers         = NewStyle,
+  WordSpace       = 0.6]
+
+
+\newfontfamily{\spoken}{Sans}[
+  % Files
+  Path      = fonts/sans/ ,
   % Fonts
   UprightFont     = *-Regular.ttf ,
   UprightFeatures = { SmallCapsFont = *-Regular.ttf } ,
   BoldFont        = *-Bold.ttf ,
   BoldFeatures    = { SmallCapsFont = *-Bold.ttf } ,
   ItalicFont      = *-Italic.ttf ,
-  BoldItalicFont  = *-BoldItalic.ttf]
+  BoldItalicFont  = *-Italic.ttf ,
+  % Features
+  Numbers         = OldStyle,
+  WordSpace       = 0.65,
+  LetterSpace     = -2]
 
+\newfontfamily{\versetext}{FrankRuehlCLM}[
+  % Files
+  Path      = fonts/frankrhuel/ ,
+  % Fonts
+  UprightFont     = *-Medium.ttf ,
+  UprightFeatures = { SmallCapsFont = *-Medium.ttf, } ,
+  BoldFont        = FrankRuehlCLM-Bold.ttf,
+  BoldFeatures    = { SmallCapsFont = *-Bold.ttf } ,
+  ItalicFont      = *-MediumOblique.ttf ,
+  BoldItalicFont  = *-BoldOblique.ttf ,
+  % Features
+  Numbers         = OldStyle,
+  WordSpace       = 0.6,
+  LetterSpace     = -2
+ ]
 
 
 % old-style numbers don't look great as drop-caps
@@ -148,7 +182,7 @@
  \put(\LenToUnit{\paperwidth},\LenToUnit{0\paperheight}){#1}%
  }}%
 
-\sodef\vh{}{-.03em}{0.25em plus0.45em minus 0.07em}{1em plus.1em minus.1em}
+\sodef\vh{}{-0.3pt}{2.5pt plus0pt minus 1pt}{1pt plus0.15pt minus0.1pt}
 \sodef\vt{}{-.03em}{0.2em plus0.35em minus 0.09em}{1em plus.1em minus.1em}
 \sodef\fnm{}{.1em}{0.1em plus0.1em minus 0.09em}{0.1em plus.1em minus.09em}
 \sodef\fnt{}{-0.04em}{0pt}{0pt}
@@ -167,6 +201,8 @@
 \makeatletter
 \patchcmd{\@footnotetext}{\footnotesize}{\tiny}{}{}
 
+\iffalse
+% color printing
 \definecolor{JesusRed}{rgb}{0.68, 0.08, 0.08}
 \definecolor{HighlightGray}{rgb}{0.94, 0.94, 0.94}
 \definecolor{VerseUlColor}{rgb}{1, 1, 1}
@@ -174,12 +210,26 @@
 \definecolor{fnTextColor}{rgb}{0.53, 0.53, 0.53}
 \definecolor{fnBorderColor}{rgb}{0.95, 0.95, 0.95}
 \definecolor{fnBgColor}{rgb}{.98, .98, .98}
+\definecolor{ChapterRed}{rgb}{1, 0, 0}
+\fi
+
+% b&w printing
+\definecolor{JesusRed}{rgb}{0.28, 0.28, 0.28}
+\definecolor{HighlightGray}{rgb}{0.94, 0.94, 0.94}
+\definecolor{VerseUlColor}{rgb}{1, 1, 1}
+\definecolor{VerseNumColor}{rgb}{0.75, 0.75, 0.75}
+\definecolor{fnTextColor}{rgb}{0.53, 0.53, 0.53}
+\definecolor{fnBorderColor}{rgb}{0.95, 0.95, 0.95}
+\definecolor{fnBgColor}{rgb}{.98, .98, .98}
+\definecolor{ChapterRed}{rgb}{.333, .333, .333}
+
+
 %\definecolor{VerseNumColor}{rgb}{0.41, 0.41, 0.41}
 %\definecolor{VerseUlColor}{rgb}{0.85, 0.85, 0.85}
 \newcommand\versecolor{black}
-\newcommand\chapnumcolor{red}
+\newcommand\chapnumcolor{ChapterRed}
 \newlength{\biblechapskip}
-  \setlength{\biblechapskip}{0em plus .33em minus .2em}
+  \setlength{\biblechapskip}{-10pt plus .33em minus .2em}
 \newcounter{biblechapter}
 \newcounter{bibleverse}[biblechapter]
 \renewcommand\chaptername{Book}
@@ -250,9 +300,9 @@
   \setcounter{biblechapter}{\the\biblechap@svdopt}
   \stepcounter{biblechapter}
   \setbeforesecskip{0}\setbeforesubsecskip{0}
-  \lettrine[lines=3,lhang=0,findent=2pt,nindent=0pt,loversize=0.25,lraise=0.4]{\lettrinefont\fontsize{30pt}{10pt}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
+  \lettrine[lines=2,lhang=0,findent=-1pt,nindent=0pt,loversize=0,lraise=0.09]{\hspace{-4.5pt}\lettrinefont\fontsize{24pt}{10pt}\selectfont\color{\chapnumcolor}\,\thebiblechapter\,}{}\ignorespaces}
   {\par\vspace{\biblechapskip}\setbeforesecskip{0ex}\setbeforesubsecskip{0ex}}
-\newcommand{\@verse}{\fontsize{10.4pt}{10.5pt}\selectfont\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}\hspace{0pt}}%
+
 \newcommand{\@showversenum}{\ifnum\c@bibleverse=1\else{%
   ~\color{VerseNumColor}{%
     \bfseries%
@@ -263,22 +313,28 @@
     \hspace{1.8pt}%
   }%
 }\fi\ignorespaces}
-\renewcommand{\verse}{\fontsize{10.4pt}{10.5pt}\selectfont\vt{\@verse}\@showversenum}
+
+\newcommand{\VerseText}{\versetext\fontsize{10.4pt}{10.7pt}\selectfont\color{black}}
+\newcommand{\@verse}{\VerseText\stepcounter{bibleverse}\markright{{\scshape\currbook} \thebiblechapter:\thebibleverse}\hspace{0pt}}%
+\renewcommand{\verse}{\@verse\@showversenum\hspace{0pt}}
 
 \newcommand{\verseWithHeading}[1]{%
   \@verse%
-  \ifnum\c@bibleverse=1{\sectionstyle\vh{#1}\newline}\else\vspace{3.8pt}\newline{\sectionstyle\nohyphens{\vh{#1}}}\newline\fi\@showversenum}
+  \ifnum\c@bibleverse=1{\sectionstyle\vh{#1}\newline}\else{\vspace{3.8pt}\newline\sectionstyle\vh{#1}\newline}\fi\@showversenum}
 \newcommand{\verseWithSubheading}[1]{%
   \@verse%
   \ifnum\c@bibleverse=1{\subsectionstyle\vh{#1}\newline}\else\vspace{3.8pt}\newline{\subsectionstyle\nohyphens{\vh{#1}}}\newline\fi\@showversenum}
 \newcommand{\innerVerseHeading}[1]{%
   \vspace{3.8pt}\newline{\subsectionstyle\vh{#1}}\newline}
 
-\newcommand{\JesusWords}[1]{%
-\color{JesusRed}#1\color{\versecolor}%
+\newcommand*{\JesusWords}[1]{%
+% b&w printing
+\spoken\fontsize{9.1pt}{10.7pt}\selectfont\color{JesusRed}\textit{#1}\VerseText%
+%color printing
+%\spoken\fontsize{9.1pt}{10.7pt}\selectfont\color{JesusRed}#1\VerseText%
 }
 
-\newcommand{\dictionaryentry}[3]{\vspace{5pt}\textbf{#1}\markboth{#1}{#1}\ {(#2)}\ \ $\bullet$\ {#3}}
+\newcommand{\dictionaryentry}[3]{\setlength{\parindent}{0em}\setlength{\parskip}{0pt}\markboth{}{}\textbf{#1}\ {(#2)}:\ {#3}\smallbreak}
 
 \counterwithin*{footnote}{biblechapter}
 
@@ -297,40 +353,6 @@
 
 \newcommand{\stopornaments}{\ClearShipoutPictureBG}
 
-\renewcommand{\printparttitle}[1]{%
-  \thispagestyle{empty}%
-  \addcontentsline{toc}{part}{#1}%
-  \vspace*{\fill}%
-  \begin{tikzpicture}[transform shape,every node/.style={inner sep=0pt}]%
-    \node[minimum size=\framesize](vecbox){};%
-  \node[inner sep=6pt, color=black] (text) at (vecbox.center){%
-    \HUGE \headings{\textsc{#1}}};%
-  \node[anchor=north, color=Goldenrod] (base) at (text.south){%
-    \pgfornament[width=0.5*\framesize]{88}};%
-  \end{tikzpicture}%
-  \vspace*{\fill}}
-
-\makechapterstyle{dash-embiggened}{%
-  \chapterstyle{default}
-  \setlength{\beforechapskip}{5\onelineskip}
-  \renewcommand*{\printchaptername}{}
-  \renewcommand*{\chapternamenum}{}
-  \renewcommand*{\chapnumfont}{\normalfont\Huge}
-  \settoheight{\midchapskip}{\chapnumfont 1}
-  \renewcommand*{\printchapternum}{\centering \chapnumfont
-    \rule[0.5\midchapskip]{1em}{0.4pt} \thechapter\
-    \rule[0.5\midchapskip]{1em}{0.4pt}}
-  \renewcommand*{\afterchapternum}{\par\nobreak\vskip 0.5\onelineskip}
-  \renewcommand*{\printchapternonum}{\centering
-                 \vphantom{\chapnumfont 1}\afterchapternum}
-  \renewcommand*{\chaptitlefont}{\normalfont\HUGE\scshape}
-  \renewcommand*{\printchaptertitle}[1]{\centering \chaptitlefont ##1}
-  \setlength{\afterchapskip}{2.5\onelineskip}}
-
-\chapterstyle{dash-embiggened}
-
-
-
 \newcommand{\LORD}{\textsc{\headings{Lord}}\xspace}
 \newcommand{\LORDs}{\textsc{\headings{Lord's}}\xspace}
 
@@ -345,7 +367,7 @@
 
 \frontmatter
 
-\setlrmarginsandblock{0.4375in}{0.3125in}{*}
+\setlrmarginsandblock{0.5125in}{0.375in}{*}
 \setulmarginsandblock{0.5in}{0.75in}{1}
 
 \checkandfixthelayout 
@@ -369,53 +391,11 @@
 
 
 \begin{titlingpage}
-
-\title{\Huge \headings{The Holy Bible}}
-\date{}
-\author{}
-
-
-\setlrmarginsandblock{0.75in}{0.75in}{*}
-
-\checkandfixthelayout 
-\vspace*{\fill}
-
-\begin{tikzpicture}[color=Gold,
-    transform shape,
-    every node/.style={inner sep=0pt}]
-  \node[minimum size=\framesize,fill=Beige!10](vecbox){};
-  \node[anchor=north west] at (vecbox.north west){%
-    \pgfornament[width=0.2*\framesize]{131}};
-  \node[anchor=north east] at (vecbox.north east){%
-    \pgfornament[width=0.2*\framesize,symmetry=v]{131}};
-  \node[anchor=south west] at (vecbox.south west){%
-    \pgfornament[width=0.2*\framesize,symmetry=h]{131}};
-  \node[anchor=south east] at (vecbox.south east){%
-    \pgfornament[width=0.2*\framesize,symmetry=c]{131}};
-  \node[anchor=north] at (vecbox.north){%
-    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
-  \node[anchor=south] at (vecbox.south){%
-    \pgfornament[width=0.6*\framesize]{85}};
-  \node[anchor=north,rotate=90] at (vecbox.west){%
-    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
-  \node[anchor=north,rotate=-90] at (vecbox.east){%
-    \pgfornament[width=0.6*\framesize,symmetry=h]{85}};
-  \node[inner sep=6pt, color=black] (text) at (vecbox.center){%
-    \HUGE \textsc{\headings{The Holy Bible}}};
-  \node[anchor=north, color=Goldenrod] (base) at (text.south){%
-    \pgfornament[width=0.5*\framesize]{71}};
-  \node[anchor=south, color=Goldenrod] at (text.north){%
-    \pgfornament[width=0.5*\framesize,symmetry=h]{71}};
-\end{tikzpicture}
-\vspace*{\fill}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/title-page-holy-bible.png}
 \end{titlingpage}
-
-
-
 
 \onecolumn
 \renewcommand{\contentsname}{\headings{Books of The Holy Bible}}
-
 
 % toc font styles
 \titlecontents{part}[3mm]{\normalsize\bfseries}{PART\space\thecontentslabel:\space\MakeUppercase}{}{\normalfont\dotfill\makebox[12mm][l]{\thecontentspage}}
@@ -432,43 +412,38 @@
     \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}
 % If you want to turn off columns being forced to equal height, use the starred version \begin{multicols*}{2}.
 \begin{multicols}{2}
-\setlrmarginsandblock{0.8375in}{0.3125in}{*}
-\checkandfixthelayout 
-  \@starttoc{toc}
+\@starttoc{toc}
 \end{multicols}
 \endgroup   % end of TeX group
 \makeatother
 
-
 \twocolumn
-
-
-
 
 % a blank page on the back of the page - lext page on a new right-sided page
 \newpage
 \thispagestyle{empty}
 \mbox{}
-
 \input{leb/content/preface.tex}
-
+\clearpage
 \mainmatter
-
-
-\setlrmarginsandblock{0.5625in}{0.3125in}{*}
+\addcontentsline{toc}{part}{The Old Testament}%
+\onecolumn
+\begin{centering}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/title-page-old-testament.png}
+\end{centering}
+\twocolumn
 
 % the book name, chapter and verse number at the top of the page
-\setcolsepandrule{0.125in}{0pt}
 \fancyhead[RO,LE]{\textbf{\headings{\Large \rightmark}}}
 \fancyhfoffset[RO]{1pt}
 
-\setlength\textwidth{5.125in}
-\setlength\columnwidth{2.5in}
-\setlength\columnsep{0.125in}
+\setcolsepandrule{0.1875in}{0pt}
+\setlength\textwidth{5.1125in}
+\setlength\columnwidth{2.4625in}
+\setlength\columnsep{0.1875in}
 \checkandfixthelayout 
 
 
-\part*{\headings{The Old Testament}}
 
 % a blank page on the back of the page - next page on a new right-sided page
 \clearpage
@@ -482,7 +457,6 @@
 
 \endpage
 \newpage
-
 
 % Declare our footnote values for use with the fixfoot package
 \input{leb/content/footnotes.tex}
@@ -525,27 +499,22 @@
 \input{leb/content/old-testament/Hag.tex}\flushcolsend
 \input{leb/content/old-testament/Zech.tex}\flushcolsend
 \input{leb/content/old-testament/Mal.tex}\flushcolsend
-
 % a blank page on the back of the page - next page on a new right-sided page
 \cleardoublepage
 
 
-
-\setlrmarginsandblock{0.5625in}{0.3125in}{*}
-\checkandfixthelayout 
-
-\part*{\headings{The New Testament}}
-
+\addcontentsline{toc}{part}{The New Testament}%
+\onecolumn
+\begin{centering}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/title-page-new-testament.png}
+\end{centering}
+\twocolumn
 
 % a blank page on the back of the page - next page on a new right-sided page
 \clearpage
 \newpage
 \thispagestyle{empty}
 \mbox{}
-
-
-\setlrmarginsandblock{0.5625in}{0.3125in}{*}
-\checkandfixthelayout 
 
 
 \input{leb/content/new-testament/Mat.tex}\flushcolsend
@@ -578,14 +547,22 @@
 % a blank page on the back of the page - next page on a new right-sided page
 \cleardoublepage
 
+% a blank page follows the book of Revelation
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+
 \addcontentsline{toc}{part}{\headings{Extra Content}}
 
-\addcontentsline{toc}{chapter}{\headings{Concordance}}
+\onecolumn
+
+\addcontentsline{toc}{chapter}{\headings{Dictionary}}
 
 
 % one page of dictionary is a nice idea - some words used in this translation are a bit rare in everyday language
 \thispagestyle{empty}
-\singlecolumn
+
 \input{leb/content/dictionary.tex}\flushcolsend
 \clearpage
 \newpage
@@ -593,27 +570,23 @@
 % now we are going to include a concordance. The NWT has a fairly handy one and it is easily accesible.
 % @TOTO: create a customised concordance
 
+
+\addcontentsline{toc}{chapter}{\headings{Concordance}}
+
+
+
 \includepdf[pages=-]{leb/content/concordance-6x9.pdf}
-
-\clearpage
-\newpage
-\thispagestyle{empty}
-\mbox{}
-
-
-
-
 
 
 % let's also include a few of the maps from the NWT. It is nice to look at maps sometimes, when considering the geography relating to events.
 \addcontentsline{toc}{chapter}{\headings{Diagrams and Maps}}
-\includepdf[noautoscale=true, scale=1]{leb/content/pictures/units-of-measure.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/second-temple-mount.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/settlement-of-the-promised-land.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/israel-in-times-of-king-david-and-solomon.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/israel-in-time-of-jesus.png}
-\includepdf[noautoscale=true, scale=1]{leb/content/pictures/second-temple-mount.png}
 \includepdf[noautoscale=true, scale=1]{leb/content/pictures/spread-of-christianity.png}
-
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/units-of-currency.png}
+\includepdf[noautoscale=true, scale=1]{leb/content/pictures/units-of-measurement.png}
 
 
 
@@ -622,10 +595,6 @@
 
 
 % an empty page at the back
-\clearpage
-\newpage
-
-\mbox{}
-
+\cleardoublepage
 
 \end{document}
