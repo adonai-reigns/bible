@@ -12,5 +12,5 @@ rm "$VERSION.fls"
 rm "$VERSION.out"
 rm "$VERSION.toc"
 rm "$VERSION.log"
-
+rm "$VERSION.aux"
 
