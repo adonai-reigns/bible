@@ -1,10 +1,16 @@
 #!/bin/bash
 
-rm main-leb.fdb_latexmk
-rm main-leb.fls
-rm main-leb.out
-rm main-leb.pdf
-rm main-leb.toc
-rm main-leb.log
+#VERSION="main-int"
+VERSION="main-leb"
 
-latexmk -xelatex -quiet -f main-leb.tex
+echo "Running latexmk -xelatex -quiet -f $VERSION.tex"
+
+latexmk -xelatex -quiet -f "$VERSION.tex"
+
+rm "$VERSION.fdb_latexmk"
+rm "$VERSION.fls"
+rm "$VERSION.out"
+rm "$VERSION.toc"
+rm "$VERSION.log"
+
+
