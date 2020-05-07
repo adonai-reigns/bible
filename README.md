@@ -7,13 +7,13 @@ I am using LaTeX to typeset the [Lexham English Bible](https://lexhamenglishbibl
 
 This project has been forked from an existing project where the King James Version of the Holy Bible was being typeset.
 
-The book has been prepared for print by www.snowfallpress.com as a 6 inch by 9 inch perfect-bound paperback, with 60gsm lightweight paperstock. The resulting file produces 1182 pages and a spine being 1.85 inches thick.
+The book has been prepared for print by www.snowfallpress.com as a 6 inch by 9 inch perfect-bound paperback, with 60gsm lightweight paperstock. The resulting file produces 1096 pages and a spine being 1.72 inches thick.
 
 The text for this translation has been converted to LaTeX format from XML source code freely available at https://lexhamenglishbible.com/download/.
 
 The proprietary fonts used in the original fork have been replaced by free Open-Source fonts.
 
-You may download the latest compiled PDF file (28.7MB) at https://static.adonai-reigns.life/holy-bible/leb-holy-bible-20200218.pdf
+You may download the latest compiled PDF file (34MB) at https://static.adonai-reigns.life/holy-bible/leb-holy-bible-20200404.pdf
 
 Building
 --------
